@@ -12,33 +12,39 @@ window.EidosTrainer = {
   //  FLASHCARD DATA
   // ========================================================
   flashcards: [
-    { q: "# 이 기호는 뭘 하는 거야?", a: "헤딩 (제목). # 개수 = 층 번호.\n# = 1층 (가장 큰 제목)\n## = 2층\n### = 3층" },
-    { q: "`백틱` 1개로 감싸면?", a: "인라인 코드 — 문장 안에서 기술 용어를 시각적으로 구분.\n회색 배경 + 모노스페이스 폰트로 표시됨." },
-    { q: "```백틱 3개```로 감싸면?", a: "코드 블록 — 여러 줄을 상자 안에 보여주기.\n닫을 때: 새 줄에 ``` 만 단독으로!" },
-    { q: "---는 어디에 쓰느냐에 따라\n역할이 달라진다. 뭐가 다를까?", a: "노트 맨 첫 줄 → frontmatter 울타리\n(이름표 영역의 시작/끝)\n\n본문 중간 → 수평선 (가로 구분선)" },
-    { q: "YAML의 규칙은 딱 하나.\n그게 뭐야?", a: "이름: 값\n(콜론 + 띄어쓰기 1칸)\n\ntype:concept ← ✗ 띄어쓰기 없음\ntype: concept ← ✓" },
-    { q: "YAML에서 값이 여러 개일 때\n어떻게 써?", a: "대괄호 + 쉼표\ntags: [ontology, SPARQL, data]\n\n쉼표 뒤에 띄어쓰기 넣으면 가독성 좋음." },
-    { q: "frontmatter 뜻이 뭐야?\n왜 '이름표'라고 불러?", a: "Front(앞) + Matter(내용물)\n= 본문 앞에 오는 메타정보.\n\n출판 용어: 책의 제목 페이지, 목차, 저자 정보 부분.\n노트의 분류/날짜/관계를 담으니까 '이름표' 역할." },
-    { q: "Frontmatter 안에서 [a, b] 와\n본문에서 [[a]] 의 차이는?", a: "[a, b] = YAML 목록 (값 여러 개 나열)\n[[a]] = 옵시디언 링크 (다른 노트로 연결)\n\nfrontmatter에서는 [  ] 1개\n본문에서는 [[  ]] 2개" },
-    { q: "URL에 : 나 / 가 있을 때\nYAML에서 어떻게 써?", a: "큰따옴표로 감싸기\nsource: \"https://youtu.be/...\"\n\n안 감싸면 YAML이 :을 새로운 이름:값으로 혼동." },
-    { q: "⌘ Cmd 키는 뭘 해?", a: "\"이걸 해\" — Mac의 기본 명령 키.\nCmd+C = 복사\nCmd+V = 붙여넣기\nCmd+S = 저장" },
-    { q: "⌥ Option 키는 뭘 해?", a: "\"근데 좀 다르게 해\" — 변형 키.\n\nCmd+S = 저장\nCmd+Opt+S = 다른 이름으로 저장\n\nOpt+Shift+- = em dash (—)" },
-    { q: "Fn 키는 뭘 해?", a: "\"이 키의 숨겨진 기능을 써\"\n\nF1~F12가 기본은 밝기/볼륨인데\nFn 누르면 진짜 F1~F12 기능 실행." },
-    { q: "온톨로지 = ?", a: "설계도 (Schema/Blueprint)\n\n데이터 간의 관계 '규칙'을 정의.\n예: \"직원은 회사에 소속된다\"" },
-    { q: "지식 그래프 = ?", a: "온톨로지(규칙)에 따라\n실제 데이터가 입력된 결과물.\n\n온톨로지: \"직원은 회사에 소속\"\n지식 그래프: \"Bella는 OCLD에 소속\"" },
-    { q: "SPARQL은 뭘 해?", a: "지식 그래프에 질문하는 언어.\n\n 엑셀 = 한 줄 안에서 필터\nSPARQL = 관계를 따라가면서 질문\n\n\"A에 소속된 사람 중 B 스킬을 가진 사람은?\"" },
-    { q: "벡터 임베딩 = ?", a: "비슷한 것끼리 가까이 놓기.\n\n데이터를 숫자 좌표로 바꿔서\n의미가 비슷한 데이터가 공간에서 가까이 위치.\n\n옷장 정리: 겨울옷 왼쪽, 여름옷 오른쪽." },
-    { q: "SHACL은 뭘 해?", a: "규칙대로 데이터를 넣었는지 검사.\n\n\"모든 직원은 부서가 있어야 한다\"\n→ 부서 없는 직원 데이터 들어오면 ❌ 잡아냄.\n\n옵시디언에서 Dataview가 비슷한 역할." },
-    { q: "온톨로지 없는 LLM vs\n온톨로지 장착한 LLM 차이는?", a: "없는 LLM: 단어를 통계적 확률로 처리.\n논리적 추론 불가, 팩트 체크 불가.\n\n장착한 LLM: 단어를 실제 세상의 '개념'으로 이해.\n팩트 기반 답변, 인과관계 추론 가능." },
-    { q: "Framework의 원래 뜻은?\n컴퓨터에서는?", a: "원래: 건물의 뼈대 (철골 구조)\n\n컴퓨터: 코드의 기본 구조.\n뼈대가 이미 있고 살만 붙이면 됨." },
-    { q: "Pipeline의 원래 뜻은?\n컴퓨터에서는?", a: "원래: 수도관/송유관\n\n컴퓨터: 데이터가 단계별로 흘러가는 처리 과정.\nA → B → C 순서대로 처리." },
-    { q: "Sandbox의 원래 뜻은?\n컴퓨터에서는?", a: "원래: 아이들 모래놀이터\n\n컴퓨터: 안전한 실험 공간.\n뭘 해도 진짜 시스템에 영향 없음." },
-    { q: "Bug의 유래는?", a: "1947년 하버드 Mark II 컴퓨터에\n진짜 나방(moth)이 끼어서 고장.\n\n이후 코드 오류를 'bug'라 부르고\n오류 수정을 'debugging'(벌레잡기)이라 부름." },
-    { q: "Cache의 원래 뜻은?\n컴퓨터에서는?", a: "프랑스어 cacher = 숨기다\n\n컴퓨터: 자주 쓰는 데이터를\n가까운 곳에 숨겨두고 빠르게 꺼내는 것.\n\n냉장고에 자주 먹는 반찬을 앞에 두는 것과 같음." },
-    { q: "Token의 원래 뜻은?\nLLM에서는?", a: "원래: 동전/교환권 (지하철 토큰 등)\n\nLLM: 텍스트의 최소 단위 조각.\n'안녕하세요' → ['안녕', '하', '세요'] 이렇게 쪼개짐.\n\nLLM은 토큰 단위로 읽고 생성함." },
-    { q: "Grounding의 원래 뜻은?\nAI에서는?", a: "원래: 접지 (전기를 땅에 닿게 해서 안전하게)\n\nAI: LLM의 출력을 실제 데이터에 대조해서 검증.\n'땅(=현실)에 닿게' 만드는 것.\n\n→ 환각(hallucination) 방지의 핵심 기법." },
-    { q: "em dash (—) 치는 방법은?", a: "Option + Shift + -\n\nOption = '변형'\nShift = '확장'\n- = 하이픈\n\n→ 하이픈의 변형+확장 = 긴 대시(—)" },
-    { q: "Cmd+Ctrl+Space는 뭘 열어?", a: "특수문자 입력기!\n\n여기서 arrow, check, star 등\n검색하면 심볼을 찾을 수 있음.\n\n→ ← ✓ ✗ ★ 등" }
+    // --- MARKDOWN FUNDAMENTALS ---
+    { q: "What does # do, and how does\nthe number of # symbols matter?", a: "Creates headings. Count = level.\n# = H1 (largest)\n## = H2\n### = H3\n\nNever skip levels (e.g., H1 to H3)." },
+    { q: "Single backtick ` vs\ntriple backtick ```. When each?", a: "Single ` = inline code. Terms within a sentence.\n\nTriple ``` = code block. Multi-line code.\nOpening ``` can have a language: ```yaml\nClosing ``` must be alone on its own line." },
+    { q: "--- means different things\ndepending on position. Explain both.", a: "Line 1 of a note: frontmatter fence\n(opens/closes the YAML metadata block)\n\nAnywhere in the body: horizontal rule\n(visual section divider)\n\nPosition determines function." },
+    { q: "What is the ONE universal rule\nof YAML syntax?", a: "key: value (colon + exactly one space)\n\ntype:concept  = BREAKS (no space)\ntype: concept = WORKS\n\nApplies to every YAML key-value pair." },
+    { q: "[a, b] in frontmatter vs\n[[a]] in the body. Difference?", a: "[a, b] = YAML list (enumerating values)\n[[a]] = Obsidian wikilink (connects notes)\n\nFrontmatter: single brackets [ ]\nBody text: double brackets [[ ]]\n\nMixing them breaks parsing." },
+    { q: "Why must URLs in YAML\nbe wrapped in double quotes?", a: "URLs contain : and / which YAML interprets\nas key-value separators.\n\nsource: https://x.com = YAML sees 'https' as new key\nsource: \"https://x.com\" = Correct\n\nRule: special chars in value = quotes." },
+    { q: "What is frontmatter?\nWhy does it exist?", a: "Front(before) + Matter(content) = metadata.\n\nFrom publishing: title page, TOC, author info.\nIn notes: classification, dates, tags, relationships.\n\nMachines read frontmatter.\nHumans read the body." },
+    // --- YAML ADVANCED ---
+    { q: "Write valid YAML for a note with:\ntype, date, 3 tags, and a URL source.", a: "---\ntype: concept\ndate: 2026-03-15\ntags: [ontology, SPARQL, data]\nsource: \"https://example.com/paper\"\n---\n\nNote: tags use brackets, URL uses quotes." },
+    { q: "What happens if you indent\nYAML with tabs instead of spaces?", a: "YAML breaks. Tabs are illegal in YAML.\n\nYAML only allows spaces for indentation.\nMost editors auto-convert, but pasted\ncontent can contain hidden tabs.\n\nResult: parsing error, frontmatter ignored." },
+    { q: "YAML multiline values:\nwhat do | and > do?", a: "| = literal block (preserves line breaks)\ndescription: |\n  Line one\n  Line two\n\n> = folded block (joins into paragraph)\ndescription: >\n  This becomes\n  one paragraph\n\nUseful for long frontmatter descriptions." },
+    // --- ONTOLOGY & KNOWLEDGE GRAPHS ---
+    { q: "Ontology vs Knowledge Graph.\nExplain with an analogy.", a: "Ontology = blueprint/schema\n(rules for how data relates)\n\"Employees belong to departments\"\n\nKnowledge Graph = blueprint + actual data\n\"Bella belongs to OCLD\"\n\nOntology defines structure.\nKG fills it with instances." },
+    { q: "What does SPARQL do\nthat SQL cannot?", a: "SPARQL traverses relationships across a graph.\nSQL queries flat tables.\n\nSQL: SELECT * FROM employees WHERE dept='AI'\nSPARQL: Find people connected to org X\n  who published with person Y on topic Z.\n\nSPARQL follows edges. SQL filters rows." },
+    { q: "Vector embedding in one sentence.\nThen: why does it matter for LLMs?", a: "Maps data to coordinates where similar\nthings are physically close in space.\n\nFor LLMs: enables semantic search.\n\"Find notes similar to this concept\"\nworks because related ideas have\nnearby vectors, even without shared keywords." },
+    { q: "SHACL validates data.\nGive a concrete example.", a: "SHACL = Shapes Constraint Language\n\nRule: \"Every employee must have a department\"\n\nData: {name: 'Bella', role: 'RA'}\nSHACL rejects it. Missing 'department'.\n\nLike Dataview in Obsidian:\nenforcing frontmatter schema consistency." },
+    { q: "LLM without ontology vs\nLLM with ontology. What changes?", a: "Without: words = statistical patterns.\nNo logical reasoning. No fact verification.\nHallucinations unchecked.\n\nWith: words map to real-world concepts.\nCan verify claims against structured data.\nCausal reasoning becomes possible.\n\nOntology = pattern matching vs understanding." },
+    // --- TECH ETYMOLOGY ---
+    { q: "Framework: original meaning.\nWhy is it called that in code?", a: "Original: steel skeleton of a building.\nEverything hangs on the structure.\n\nIn code: pre-built structure with conventions.\nYou fill in your logic; the frame holds it.\n\nKey: you work INSIDE a framework.\nYou call a library. A framework calls you." },
+    { q: "Cache comes from French.\nWhat does it literally mean?", a: "French 'cacher' = to hide.\n\nComputing: hiding frequently-used data\nclose by for fast retrieval.\n\nAnalogy: spices on the counter vs pantry.\n\nLayers: L1 cache (counter) -> L2 (shelf)\n-> L3 (pantry) -> disk (grocery store)." },
+    { q: "Token: subway token to LLM token.\nTrace the metaphor.", a: "Original: coin/voucher exchanged for access.\nOne token = one unit of value.\n\nLLMs: one token = one unit of text.\n'Hello world' = ['Hello', ' world'] = 2 tokens\nCJK: each character often = 1 token.\n\nLLMs read, think, and bill in tokens." },
+    { q: "Grounding in AI.\nWhy the electrical metaphor?", a: "Electrical: connecting to earth so\nexcess charge dissipates safely.\n\nAI: connecting LLM output to\nverifiable real-world data.\n\nWithout grounding:\n- Electricity = shock hazard\n- LLM = hallucination hazard\n\nRAG is the main grounding technique." },
+    { q: "Origin of 'bug' in computing.\nWhy does the term persist?", a: "1947: a moth jammed the Harvard Mark II.\nGrace Hopper taped it in the logbook:\n\"First actual case of bug being found.\"\n\nThe term predates computers (Edison used it)\nbut the moth made it iconic.\n\nDebugging = removing what shouldn't be there." },
+    // --- KEYBOARD & SHORTCUTS ---
+    { q: "Cmd, Option, Shift, Ctrl, Fn.\nMental model for each?", a: "Cmd = \"Do this\" (primary action)\nOption = \"Do it differently\" (variant)\nShift = \"Do opposite/expanded version\"\nCtrl = auxiliary modifier (rare on Mac)\nFn = \"Use hidden function of this key\"\n\nPattern: Cmd+S = save\nCmd+Shift+S = save as (expanded)" },
+    { q: "How to type em dash (--) on Mac?\nExplain the logic.", a: "Option + Shift + -\n\nLogic:\n- = hyphen (base character)\nOption = \"variant of\"\nShift = \"expanded\"\n\nExpanded variant of hyphen = em dash.\n\nAlso: Option + - alone = en dash\n(just variant, not expanded)" },
+    { q: "Cmd+Ctrl+Space opens what?\nWhy this specific combo?", a: "Character Viewer (emoji/symbol picker).\n\nLogic:\nCmd = primary action\nCtrl = auxiliary\nSpace = text entry\n\nAll three = \"special text entry mode\"\n\nOnce open, search: arrow, check, star, etc." },
+    // --- ADVANCED SYNTHESIS ---
+    { q: "A note has broken frontmatter.\nList 3 possible causes.", a: "1. Missing space after colon\n   type:concept (needs type: concept)\n\n2. Unquoted special characters\n   source: https://... (needs quotes)\n\n3. Tabs instead of spaces\n   YAML only allows space indentation\n\nBonus: missing closing ---\nEntire note treated as YAML." },
+    { q: "[[Note]] vs [text](url).\nWhen to use each?", a: "[[Note]] = internal vault link.\nBidirectional. Shows in graph view.\nWorks offline.\n\n[text](url) = standard web link.\nOne-directional. External resource.\nNo graph connection.\n\nRule: vault note = [[ ]]\nExternal = [ ]( )" },
+    { q: "Design a frontmatter schema\nfor a research paper note.", a: "---\ntype: literature\ndate: 2026-03-15\nstatus: reading\ntags: [trust, AI, education]\nauthors: [\"Chen, P.\", \"Mrazek, A.\"]\nyear: 2024\njournal: \"Journal of Ed Psych\"\ndoi: \"10.1037/edu0000XXX\"\nrelated: [\"[[ZPD]]\", \"[[Self-Regulation]]\"]\n---\n\nConsistent schema enables Dataview queries." },
+    { q: "Ontology vs schema vs taxonomy.\nRelationship between the three?", a: "Taxonomy = hierarchical classification\n(animal > mammal > dog)\n\nSchema = structure definition\n(fields, types, required vs optional)\n\nOntology = schema + relationships + rules\n(dogs are mammals, mammals are warm-blooded,\nwarm-blooded implies temperature regulation)\n\nComplexity: taxonomy < schema < ontology." }
   ],
 
   // ========================================================
@@ -46,32 +52,32 @@ window.EidosTrainer = {
   // ========================================================
   challengeSets: [
     [
-      { q: "\"SPARQL\"이라는 용어를 문장 안에서 강조하려면 어떻게 쳐?", answer: "`SPARQL`", hint: "백틱 1개로 감싸기" },
-      { q: "frontmatter를 시작하는 첫 줄을 써봐", answer: "---", hint: "하이픈 3개" },
-      { q: "type이 concept이고 date가 2026-03-15인 frontmatter를 완성해봐", answer: "---\ntype: concept\ndate: 2026-03-15\n---", hint: "--- 울타리 안에 이름: 값" },
-      { q: "tags에 ontology, SPARQL, data 세 개를 넣는 YAML을 써봐", answer: "tags: [ontology, SPARQL, data]", hint: "대괄호 + 쉼표 + 띄어쓰기" },
-      { q: "em dash (—)를 치려면 어떤 키 조합?", answer: "Option + Shift + -", hint: "Option = 변형, Shift = 확장, - = 하이픈의 변형" }
+      { q: "Write complete frontmatter for a concept note about SPARQL, dated today, with 3 tags.", answer: "---\ntype: concept\ndate: 2026-03-15\ntags: [SPARQL, ontology, query]\n---", hint: "--- fence, key: value, brackets for list" },
+      { q: "What's wrong with this YAML?\ntags: [ontology, SPARQL]\nsource: https://example.com", answer: "URL needs double quotes because it contains : and /", hint: "Special characters in values need quoting" },
+      { q: "Write a YAML multiline literal block for a description field.", answer: "description: |\n  First line\n  Second line", hint: "| preserves line breaks, indent with 2 spaces" },
+      { q: "Type the keyboard shortcut for em dash on Mac and explain the logic.", answer: "Option + Shift + - (variant + expanded + hyphen = long dash)", hint: "Option = variant, Shift = expanded" },
+      { q: "What's the difference between ontology and knowledge graph?", answer: "Ontology = rules/blueprint for how data relates. Knowledge graph = ontology filled with actual data instances.", hint: "Blueprint vs blueprint + data" }
     ],
     [
-      { q: "제목 2단계 (2층)를 만들려면?", answer: "## 텍스트", hint: "# 개수 = 층 번호" },
-      { q: "Knowledge-Graph 노트로 링크를 만들려면?", answer: "[[Knowledge-Graph]]", hint: "대괄호 2개" },
-      { q: "URL https://youtu.be/abc 를 YAML 값으로 넣으려면?", answer: 'source: "https://youtu.be/abc"', hint: "특수문자가 있으면 큰따옴표" },
-      { q: "코드 블록을 닫으려면 어떻게 해?", answer: "```\n(새 줄에 백틱 3개만 단독으로)", hint: "다른 글자 없이 백틱 3개만" },
-      { q: "Cmd 키의 역할을 한마디로?", answer: "기본 명령 키 (\"이걸 해\")", hint: "Mac의 주인공 키" }
+      { q: "Create an internal link to a note called 'Self-Regulation' and an external link to Google.", answer: "[[Self-Regulation]] and [Google](https://google.com)", hint: "Double brackets = internal, [text](url) = external" },
+      { q: "This YAML breaks. Why?\ntype: concept\n\ttags: [a, b]", answer: "Tabs are illegal in YAML. Only spaces allowed for indentation.", hint: "YAML's strictest rule about whitespace" },
+      { q: "SPARQL vs SQL: what can SPARQL do that SQL cannot?", answer: "Traverse relationships across a graph (follow edges between nodes), not just filter flat table rows.", hint: "Graph traversal vs row filtering" },
+      { q: "Write frontmatter for a literature note with authors list and DOI.", answer: "---\ntype: literature\nauthors: [\"Smith, J.\", \"Lee, K.\"]\ndoi: \"10.1000/xyz123\"\n---", hint: "Authors in brackets with quotes, DOI in quotes" },
+      { q: "What is SHACL and what's its Obsidian equivalent?", answer: "SHACL validates data against schema rules (e.g., required fields). Dataview in Obsidian does similar frontmatter validation.", hint: "Shapes Constraint Language" }
     ],
     [
-      { q: "온톨로지를 한마디로 정의하면?", answer: "데이터 간 관계 규칙을 정의하는 설계도", hint: "Schema / Blueprint" },
-      { q: "하이라이트(노란 형광펜)를 만들려면?", answer: "==텍스트==", hint: "등호 2개로 감싸기" },
-      { q: "YAML에서 type:concept이 에러인 이유는?", answer: "콜론 뒤에 띄어쓰기가 없어서", hint: "규칙: 이름: 값 (콜론 + 스페이스)" },
-      { q: "frontmatter와 코드 블록의 차이 — 각각 뭘로 감싸?", answer: "frontmatter = --- (하이픈 3개)\n코드 블록 = ``` (백틱 3개)", hint: "하이픈 vs 백틱" },
-      { q: "Option 키의 역할을 한마디로?", answer: "변형 키 (\"근데 좀 다르게 해\")", hint: "기본 동작에 변형을 줌" }
+      { q: "Explain grounding in AI using the electrical metaphor.", answer: "Electrical grounding connects to earth for safety. AI grounding connects LLM output to verifiable data to prevent hallucinations.", hint: "Both prevent dangerous disconnection from reality" },
+      { q: "What are the 3 most common causes of broken frontmatter?", answer: "1. Missing space after colon (type:x)\n2. Unquoted special characters (URLs)\n3. Tabs instead of spaces", hint: "Syntax, quoting, whitespace" },
+      { q: "Vector embedding in one sentence.", answer: "Maps data to numerical coordinates where semantically similar items are physically close in space.", hint: "Proximity = similarity" },
+      { q: "Framework vs library: what's the key distinction?", answer: "You call a library. A framework calls you (inversion of control). You work inside a framework's structure.", hint: "Who controls the flow?" },
+      { q: "Taxonomy vs schema vs ontology: rank by complexity and explain.", answer: "Taxonomy (classification) < Schema (structure + types) < Ontology (schema + relationships + inference rules)", hint: "Each level adds more expressiveness" }
     ],
     [
-      { q: "Pipeline의 원래 뜻과 컴퓨터 뜻은?", answer: "수도관 → 데이터가 단계별로 흘러가는 처리 과정", hint: "물이 파이프를 타고 흐르듯이" },
-      { q: "Bug는 왜 벌레라고 불러?", answer: "1947년 진짜 나방이 컴퓨터에 끼어서 고장남", hint: "실제 사건에서 유래" },
-      { q: "Cache(캐시)의 원래 뜻은?", answer: "프랑스어로 '숨기다' — 자주 쓰는 데이터를 가까이 숨겨두기", hint: "cacher = 숨기다" },
-      { q: "Grounding이 AI에서 뜻하는 건?", answer: "LLM 출력을 실제 데이터에 대조해서 검증 (환각 방지)", hint: "접지 = 현실에 닿게 하기" },
-      { q: "Cmd+Ctrl+Space를 누르면 뭐가 열려?", answer: "특수문자 입력기", hint: "심볼/이모지 검색창" }
+      { q: "Design a YAML frontmatter schema for tracking weekly reflections.", answer: "---\ntype: reflection\ndate: 2026-03-15\nweek: 9\ncourse: EDP382K\ntags: [metacognition, self-regulation]\nstatus: submitted\n---", hint: "Think about what fields you'd query with Dataview" },
+      { q: "LLM with ontology vs without: what specifically changes?", answer: "Without: statistical pattern matching, no fact checking, hallucinations.\nWith: concept-level understanding, fact verification against structured data, causal reasoning.", hint: "Pattern matching vs understanding" },
+      { q: "Cache has 4 layers. Name them from fastest to slowest.", answer: "L1 cache (CPU register) -> L2 cache -> L3 cache -> Disk/SSD. Each layer is larger but slower.", hint: "Think: counter -> shelf -> pantry -> grocery store" },
+      { q: "Write both a YAML literal block (|) and folded block (>).", answer: "Literal: description: |\n  Line one\n  Line two\n(preserves breaks)\n\nFolded: description: >\n  Joined into\n  one paragraph\n(folds lines)", hint: "| = keep breaks, > = join lines" },
+      { q: "Cmd+Ctrl+Space: what opens and why that specific key combo?", answer: "Character Viewer. Cmd=action, Ctrl=auxiliary, Space=text entry. All three = special text entry mode.", hint: "Each modifier adds a dimension" }
     ]
   ],
 
