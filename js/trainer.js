@@ -393,12 +393,16 @@ window.EidosTrainer = {
     var badge = document.getElementById('zpd-badge');
     if (!badge) return;
 
+    if (zpd.zone === 'insufficient') {
+      badge.style.display = 'none';
+      return;
+    }
+    badge.style.display = '';
     badge.textContent = zpd.label;
     badge.className = 'zpd-indicator';
     if (zpd.zone === 'easy') badge.classList.add('too-easy');
     else if (zpd.zone === 'optimal') badge.classList.add('optimal');
     else if (zpd.zone === 'hard') badge.classList.add('scaffold-needed');
-    else badge.classList.add('too-easy');
   },
 
   // ========================================================
