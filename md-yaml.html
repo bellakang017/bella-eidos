@@ -236,8 +236,7 @@
 <!-- ====== NAV ====== -->
 <nav class="nav">
   <div class="nav-left">
-    <a href="index.html">&larr; Hub</a>
-    <span class="nav-brand">bella eidos</span>
+    <a href="index.html" style="font-family:'JetBrains Mono',monospace;font-size:0.8rem;color:#888;text-decoration:none;">&larr; Home</a>
   </div>
 
   <div class="nav-tabs">
@@ -264,7 +263,7 @@
 <!-- ==================== RECALL (Flashcards) ==================== -->
 <div class="page active" id="page-recall">
   <div class="section-title">Recall</div>
-  <div class="section-desc">카드를 클릭하면 답이 나와. 매일 한 번 전체 복습 권장.</div>
+  <div class="section-desc">Click the card to flip. Daily full review recommended.</div>
 
   <div class="flashcard-container">
     <div class="flashcard" id="flashcard" onclick="EidosTrainer.flipCard()">
@@ -288,7 +287,7 @@
   </div>
 
   <div style="margin-top:var(--sp-10);">
-    <div class="section-title">개념 지도</div>
+    <div class="section-title">Concept Map</div>
     <div class="concept-map"><span class="cm-accent">마크다운 기초</span>
 <span class="cm-dim">│</span>
 <span class="cm-dim">├──</span> <span class="cm-green">#</span>  헤딩 (층 나누기: # = 1층, ## = 2층, ### = 3층)
@@ -319,7 +318,7 @@
 <!-- ==================== SANDBOX ==================== -->
 <div class="page" id="page-sandbox">
   <div class="section-title">Sandbox</div>
-  <div class="section-desc">왼쪽에 마크다운을 타이핑하면 오른쪽에서 결과를 바로 볼 수 있어.</div>
+  <div class="section-desc">Type markdown on the left, see the result on the right.</div>
 
   <div class="sandbox-grid">
     <div>
@@ -381,7 +380,7 @@ tags: [ontology, learning]
 <!-- ==================== CHALLENGE ==================== -->
 <div class="page" id="page-challenge">
   <div class="section-title">Challenge</div>
-  <div class="section-desc">직접 타이핑해서 제출. 정답과 비교해볼 수 있어.</div>
+  <div class="section-desc">Type your answer and check against the solution.</div>
 
   <div id="challengeList"></div>
 
@@ -393,7 +392,7 @@ tags: [ontology, learning]
 <!-- ==================== GLOSSARY ==================== -->
 <div class="page" id="page-glossary">
   <div class="section-title">Glossary</div>
-  <div class="section-desc">대부분 일상 사물에서 왔어. 원래 뜻을 알면 컴퓨터 뜻이 자동으로 추론돼.</div>
+  <div class="section-desc">Most terms come from everyday objects. Know the origin, infer the meaning.</div>
 
   <!-- 건축/건설 -->
   <div class="card" style="margin-bottom:var(--sp-5);">
@@ -469,7 +468,7 @@ tags: [ontology, learning]
 <!-- ==================== SYMBOLS ==================== -->
 <div class="page" id="page-symbols">
   <div class="section-title">Symbols</div>
-  <div class="section-desc">Mac + 옵시디언에서 자주 쓰는 심볼. 왜 이 키 조합인지도 같이.</div>
+  <div class="section-desc">Common symbols for Mac + Obsidian, and why those key combos work.</div>
 
   <!-- 마크다운 핵심 심볼 -->
   <div class="card" style="margin-bottom:var(--sp-5);">
@@ -563,7 +562,7 @@ tags: [ontology, learning]
       <span title="큰따옴표 열기" onclick="EidosTrainer.copySymbol('\u201C')">&ldquo;</span>
       <span title="큰따옴표 닫기" onclick="EidosTrainer.copySymbol('\u201D')">&rdquo;</span>
     </div>
-    <div class="caption" style="text-align:center;">심볼을 클릭하면 복사돼!</div>
+    <div class="caption" style="text-align:center;">Click a symbol to copy</div>
     <div id="copyAlert" style="display:none;text-align:center;color:var(--green);font-size:13px;font-weight:600;margin-top:4px;"></div>
   </div>
 

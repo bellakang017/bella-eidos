@@ -6,109 +6,471 @@
 <title>bella eidos</title>
 <meta name="description" content="Personal constructivist learning tool">
 <link rel="icon" href="images/favicon.svg">
-<link rel="stylesheet" href="css/eidos.css">
+<link href="https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400;0,500;0,600;0,700;0,800;1,400;1,500;1,600;1,700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: 'EB Garamond', Georgia, serif;
+    background: #F5F2ED;
+    color: #000;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  ::selection { background: rgba(139,105,20,0.15); }
+
+  /* === TOP BAR === */
+  .topbar {
+    border-bottom: 3px solid #000;
+    padding: 0.6rem 0;
+    text-align: center;
+  }
+
+  .topbar-nav {
+    display: flex;
+    justify-content: center;
+    gap: 2rem;
+    font-family: 'EB Garamond', serif;
+    font-size: 1.05rem;
+    font-weight: 500;
+  }
+
+  .topbar-nav a {
+    color: #000;
+    text-decoration: none;
+    transition: color 0.2s;
+  }
+
+  .topbar-nav a:hover { color: #8B6914; }
+
+  .topbar-nav a.active {
+    font-weight: 700;
+    border-bottom: 2px solid #000;
+    padding-bottom: 2px;
+  }
+
+  /* === MASTHEAD === */
+  .masthead {
+    text-align: center;
+    padding: 2.5rem 1rem 1.5rem;
+    border-bottom: 1px solid rgba(0,0,0,0.1);
+  }
+
+  .masthead-title {
+    font-family: 'EB Garamond', serif;
+    font-size: 3.5rem;
+    font-weight: 400;
+    font-style: italic;
+    letter-spacing: -0.02em;
+    color: #000;
+  }
+
+  .masthead-sub {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.7rem;
+    color: #888;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    margin-top: 0.4rem;
+  }
+
+  /* === FEATURED (hero card) === */
+  .featured {
+    max-width: 1000px;
+    margin: 0 auto;
+    padding: 2rem 2rem 0;
+  }
+
+  .featured-card {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 2.5rem;
+    align-items: center;
+    cursor: pointer;
+    padding: 2rem 0;
+    border-bottom: 1px solid rgba(0,0,0,0.1);
+    transition: opacity 0.2s;
+  }
+
+  .featured-card:hover { opacity: 0.85; }
+
+  .featured-visual {
+    aspect-ratio: 4/3;
+    background: #2C2620;
+    border-radius: 2px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+    position: relative;
+  }
+
+  .featured-visual .fv-code {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.9rem;
+    color: rgba(237,232,223,0.7);
+    line-height: 2;
+    padding: 1.5rem;
+    white-space: pre;
+  }
+
+  .featured-visual .fv-accent {
+    color: #D4A855;
+    font-weight: 600;
+  }
+
+  .featured-visual .fv-dim {
+    color: rgba(237,232,223,0.3);
+  }
+
+  .featured-body .fb-label {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.65rem;
+    font-weight: 600;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: #8B6914;
+    margin-bottom: 0.75rem;
+  }
+
+  .featured-body .fb-title {
+    font-family: 'EB Garamond', serif;
+    font-size: 2.2rem;
+    font-weight: 500;
+    line-height: 1.2;
+    margin-bottom: 1rem;
+    color: #000;
+  }
+
+  .featured-body .fb-desc {
+    font-family: 'EB Garamond', serif;
+    font-size: 1.15rem;
+    line-height: 1.6;
+    color: #444;
+    margin-bottom: 1.25rem;
+  }
+
+  .featured-body .fb-tags {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.72rem;
+    color: #999;
+    letter-spacing: 0.03em;
+  }
+
+  /* === GRID (secondary cards) === */
+  .grid-section {
+    max-width: 1000px;
+    margin: 0 auto;
+    padding: 2rem;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 2rem;
+  }
+
+  .grid-card {
+    border-top: 2px solid #000;
+    padding-top: 1rem;
+    transition: opacity 0.2s;
+  }
+
+  .grid-card.locked {
+    opacity: 0.3;
+    pointer-events: none;
+  }
+
+  .grid-card:not(.locked) {
+    cursor: pointer;
+  }
+
+  .grid-card:not(.locked):hover { opacity: 0.7; }
+
+  .grid-card .gc-label {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.6rem;
+    font-weight: 600;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: #999;
+    margin-bottom: 0.5rem;
+  }
+
+  .grid-card .gc-title {
+    font-family: 'EB Garamond', serif;
+    font-size: 1.5rem;
+    font-weight: 500;
+    line-height: 1.25;
+    margin-bottom: 0.5rem;
+    color: #000;
+  }
+
+  .grid-card .gc-desc {
+    font-family: 'EB Garamond', serif;
+    font-size: 1.05rem;
+    color: #555;
+    line-height: 1.5;
+  }
+
+  .grid-card .gc-badge {
+    display: inline-block;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.6rem;
+    font-weight: 600;
+    color: #aaa;
+    border: 1px solid #ddd;
+    padding: 0.15rem 0.5rem;
+    border-radius: 2px;
+    margin-top: 0.5rem;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+  }
+
+  /* === PROTOCOL STRIP === */
+  .protocol-strip {
+    max-width: 1000px;
+    margin: 0 auto;
+    padding: 1.5rem 2rem;
+    border-top: 1px solid rgba(0,0,0,0.1);
+    border-bottom: 1px solid rgba(0,0,0,0.1);
+    display: flex;
+    align-items: center;
+    gap: 2.5rem;
+  }
+
+  .protocol-strip .ps-title {
+    font-family: 'EB Garamond', serif;
+    font-size: 0.95rem;
+    font-style: italic;
+    color: #666;
+    white-space: nowrap;
+  }
+
+  .protocol-strip .ps-items {
+    display: flex;
+    gap: 2rem;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.75rem;
+    color: #888;
+  }
+
+  /* === STATS BAR === */
+  .stats-bar {
+    max-width: 1000px;
+    margin: 0 auto;
+    padding: 2rem;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1rem;
+    text-align: center;
+  }
+
+  .stat-num {
+    font-family: 'EB Garamond', serif;
+    font-size: 2.5rem;
+    font-weight: 400;
+    color: #000;
+  }
+
+  .stat-lbl {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.65rem;
+    color: #999;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    margin-top: 0.15rem;
+  }
+
+  /* === WEEK HISTORY === */
+  .week-section {
+    max-width: 1000px;
+    margin: 0 auto;
+    padding: 0 2rem 2rem;
+  }
+
+  .week-label {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.65rem;
+    font-weight: 600;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: #999;
+    margin-bottom: 0.75rem;
+  }
+
+  .log-entry {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    padding: 0.5rem 0;
+    border-bottom: 1px solid rgba(0,0,0,0.06);
+  }
+
+  .log-date {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.8rem;
+    color: #888;
+    min-width: 5.5rem;
+  }
+
+  .log-bar-bg {
+    flex: 1;
+    height: 3px;
+    background: rgba(0,0,0,0.06);
+    border-radius: 2px;
+    overflow: hidden;
+  }
+
+  .log-bar {
+    height: 100%;
+    background: #000;
+    border-radius: 2px;
+  }
+
+  .log-score {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.8rem;
+    font-weight: 600;
+    min-width: 2.5rem;
+    text-align: right;
+    color: #000;
+  }
+
+  .week-empty {
+    font-family: 'EB Garamond', serif;
+    font-style: italic;
+    font-size: 1rem;
+    color: #aaa;
+    padding: 1rem 0;
+  }
+
+  /* === FOOTER === */
+  .site-footer {
+    max-width: 1000px;
+    margin: 0 auto;
+    padding: 2rem;
+    border-top: 3px solid #000;
+    text-align: center;
+  }
+
+  .site-footer p {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.7rem;
+    color: #aaa;
+    letter-spacing: 0.04em;
+  }
+
+  /* === RESPONSIVE === */
+  @media (max-width: 700px) {
+    .topbar-nav { gap: 1rem; font-size: 0.9rem; }
+    .masthead-title { font-size: 2.5rem; }
+    .featured-card { grid-template-columns: 1fr; }
+    .featured-body .fb-title { font-size: 1.7rem; }
+    .grid-section { grid-template-columns: 1fr; }
+    .protocol-strip { flex-direction: column; gap: 0.75rem; align-items: flex-start; }
+    .stats-bar { gap: 0.5rem; }
+    .stat-num { font-size: 2rem; }
+  }
+</style>
 </head>
 <body>
 
-<nav class="nav">
-  <a href="index.html" class="nav-brand">bella eidos</a>
-  <div class="nav-right">
-    <span class="streak-badge" id="streakBadge">0 days</span>
+<!-- Top Navigation -->
+<nav class="topbar">
+  <div class="topbar-nav">
+    <a href="md-yaml.html">MD & YAML</a>
+    <a href="#" style="color:#aaa;pointer-events:none;">EdPsych</a>
+    <a href="#" style="color:#aaa;pointer-events:none;">Methods</a>
+    <a href="#" style="color:#aaa;pointer-events:none;">Glossary</a>
   </div>
 </nav>
 
-<main class="hub-container">
+<!-- Masthead -->
+<header class="masthead">
+  <h1 class="masthead-title">bella eidos</h1>
+  <p class="masthead-sub">Constructivist Learning Tool</p>
+</header>
 
-  <!-- Hero -->
-  <section style="text-align:center; padding:5rem 0 3.5rem;" class="animate-in d1">
-    <h1 class="display-lg" style="margin-bottom:0.6rem;">What will you construct today?</h1>
-    <p class="caption" style="letter-spacing:0.08em;">MEANING-FIRST LEARNING. ERROR-DRIVEN GROWTH.</p>
-  </section>
+<!-- Featured Domain -->
+<section class="featured">
+  <article class="featured-card" onclick="window.location.href='md-yaml.html'">
+    <div class="featured-visual">
+      <div class="fv-code"><span class="fv-dim">---</span>
+<span class="fv-accent">type</span>: concept
+<span class="fv-accent">date</span>: 2026-03-15
+<span class="fv-accent">tags</span>: [ontology, learning]
+<span class="fv-dim">---</span>
 
-  <hr class="rule-thick">
-
-  <!-- Domains -->
-  <section style="padding:2rem 0 2.5rem;">
-    <div class="label" style="margin-bottom:1rem;">Domains</div>
-
-    <div class="domain-card animate-in d2" onclick="window.location.href='md-yaml.html'" style="margin-bottom:0.75rem;">
-      <div class="card-icon">&lt;/&gt;</div>
-      <div class="card-title">MD & YAML Trainer</div>
-      <div class="card-desc">Markdown, YAML, ontology terms</div>
-      <div class="card-tags">flashcards &middot; sandbox &middot; challenges &middot; glossary</div>
-      <div class="card-cta">Start Session &rarr;</div>
+<span class="fv-accent">#</span> Ontology
+<span class="fv-dim">The structure beneath</span>
+<span class="fv-dim">the surface of things.</span></div>
     </div>
-
-    <div class="domain-card locked animate-in d3" style="margin-bottom:0.75rem;">
-      <div class="card-icon" style="color:var(--text-dim);">&psi;</div>
-      <div class="card-title">EdPsych Concepts</div>
-      <div class="card-desc">Educational Psychology core theories</div>
-      <span class="card-badge">Coming Soon</span>
+    <div class="featured-body">
+      <div class="fb-label">Now Training</div>
+      <h2 class="fb-title">MD & YAML Trainer</h2>
+      <p class="fb-desc">Markdown, YAML frontmatter, ontology terms, keyboard shortcuts. Flashcards, live sandbox, challenges.</p>
+      <div class="fb-tags">flashcards &middot; sandbox &middot; challenges &middot; glossary &middot; symbols</div>
     </div>
+  </article>
+</section>
 
-    <div class="domain-card locked animate-in d4">
-      <div class="card-icon" style="color:var(--text-dim);">&empty;</div>
-      <div class="card-title">Research Methods</div>
-      <div class="card-desc">Methodology and statistics fundamentals</div>
-      <span class="card-badge">Coming Soon</span>
-    </div>
-  </section>
+<!-- Secondary Domains -->
+<section class="grid-section">
+  <article class="grid-card locked">
+    <div class="gc-label">Coming Soon</div>
+    <h3 class="gc-title">Educational Psychology</h3>
+    <p class="gc-desc">Piaget, Vygotsky, ZPD, scaffolding, metacognition, self-regulation.</p>
+    <span class="gc-badge">In Development</span>
+  </article>
+  <article class="grid-card locked">
+    <div class="gc-label">Coming Soon</div>
+    <h3 class="gc-title">Research Methods</h3>
+    <p class="gc-desc">Experimental design, statistical reasoning, qualitative approaches.</p>
+    <span class="gc-badge">In Development</span>
+  </article>
+</section>
 
-  <hr class="rule">
+<!-- Protocol Strip -->
+<div class="protocol-strip">
+  <span class="ps-title">Huberman Protocol</span>
+  <div class="ps-items">
+    <span>90min Focus</span>
+    <span>Micro-Rest</span>
+    <span>Error = Growth</span>
+  </div>
+</div>
 
-  <!-- B+ Protocol -->
-  <section style="padding:1rem 0 2rem;" class="animate-in d5">
-    <div class="label" style="margin-bottom:1rem;">Huberman Neuroplasticity Protocol</div>
-    <div style="display:flex; gap:2rem; font-family:var(--mono); font-size:0.75rem; color:var(--text-secondary);">
-      <span>90min Focus</span>
-      <span>Micro-Rest</span>
-      <span>Error = Growth</span>
-    </div>
-  </section>
+<!-- Stats -->
+<section class="stats-bar">
+  <div>
+    <div class="stat-num" id="statMinutes">0</div>
+    <div class="stat-lbl">Minutes</div>
+  </div>
+  <div>
+    <div class="stat-num" id="statSessions">0</div>
+    <div class="stat-lbl">Sessions</div>
+  </div>
+  <div>
+    <div class="stat-num" id="statStreak">0</div>
+    <div class="stat-lbl">Day Streak</div>
+  </div>
+</section>
 
-  <hr class="rule">
+<!-- Week History -->
+<section class="week-section">
+  <div class="week-label">This Week</div>
+  <div id="weekHistory">
+    <div class="week-empty">No sessions recorded yet.</div>
+  </div>
+</section>
 
-  <!-- Today's Stats -->
-  <section style="padding:2rem 0;" class="animate-in d5">
-    <div class="label" style="margin-bottom:1.25rem;">Today</div>
-    <div class="stat-grid">
-      <div>
-        <div class="stat-number" id="statMinutes">0</div>
-        <div class="stat-label">Minutes</div>
-      </div>
-      <div>
-        <div class="stat-number" id="statSessions">0</div>
-        <div class="stat-label">Sessions</div>
-      </div>
-      <div>
-        <div class="stat-number" id="statStreak">0</div>
-        <div class="stat-label">Day Streak</div>
-      </div>
-    </div>
-  </section>
-
-  <hr class="rule">
-
-  <!-- Week History -->
-  <section style="padding:2rem 0 3rem;" class="animate-in d6">
-    <div class="label" style="margin-bottom:1rem;">This Week</div>
-    <div id="weekHistory">
-      <div class="caption" style="text-align:center; padding:1rem 0;">No sessions yet.</div>
-    </div>
-  </section>
-
-  <!-- Footer -->
-  <footer style="text-align:center; padding:2rem 0 3rem; border-top:1px solid var(--rule-light);">
-    <p class="caption">Built for constructivist minds. Bella Kang, 2026.</p>
-  </footer>
-
-</main>
+<!-- Footer -->
+<footer class="site-footer">
+  <p>Bella Kang, 2026</p>
+</footer>
 
 <script src="js/core.js"></script>
 <script>
 document.addEventListener('DOMContentLoaded', function() {
   var streak = Eidos.Session.getStreak();
-  document.getElementById('streakBadge').textContent = streak + ' days';
   document.getElementById('statStreak').textContent = streak;
 
   var today = Eidos.Session.getTodayStats();
@@ -117,7 +479,6 @@ document.addEventListener('DOMContentLoaded', function() {
 
   var week = Eidos.Session.getWeekHistory();
   var container = document.getElementById('weekHistory');
-
   if (week && week.length > 0) {
     container.innerHTML = '';
     week.forEach(function(day) {
