@@ -8,31 +8,41 @@
 
 /* --- Custom Properties ------------------------------------- */
 :root {
-  --bg:            #EDE8DF;
-  --bg-warm:       #E6E0D5;
-  --card:          #F8F5F0;
+  /* surfaces — warm cream/latte */
+  --bg:            #FAF6F1;
+  --bg-warm:       #F3EDE4;
+  --card:          #FFFFFF;
   --card-hover:    #FFFFFF;
 
-  --border:        #D5CFC4;
-  --border-light:  #E0DAD0;
-  --rule:          #2C2620;
-  --rule-light:    rgba(44, 38, 32, 0.15);
+  /* borders */
+  --border:        #E0D8CC;
+  --border-light:  #EAE4DA;
+  --rule:          #E8505B;
+  --rule-light:    rgba(232, 80, 91, 0.2);
 
+  /* text — black */
   --text:          #000000;
   --text-body:     #1A1A1A;
-  --text-secondary:#555555;
-  --text-dim:      #999999;
+  --text-secondary:#666666;
+  --text-dim:      #AAAAAA;
 
-  --accent:        #8B6914;
-  --accent-hover:  #A37B1A;
-  --accent-bg:     rgba(139, 105, 20, 0.06);
+  /* accent — coffee */
+  --accent:        #C4956A;
+  --accent-hover:  #B07D52;
+  --accent-bg:     rgba(196, 149, 106, 0.08);
 
-  --green:         #3D7A52;
-  --green-bg:      rgba(61, 122, 82, 0.07);
-  --purple:        #6B5B8A;
-  --purple-bg:     rgba(107, 91, 138, 0.07);
-  --purple-border: rgba(107, 91, 138, 0.2);
-  --warm-red:      #A04030;
+  /* semantic */
+  --green:         #3D8B5A;
+  --green-bg:      rgba(61, 139, 90, 0.07);
+  --sky:           #B8DDE6;
+  --sky-bg:        rgba(184, 221, 230, 0.15);
+  --red:           #E8505B;
+  --red-bg:        rgba(232, 80, 91, 0.06);
+  --red-light:     rgba(232, 80, 91, 0.12);
+  --purple:        #E8505B;
+  --purple-bg:     rgba(232, 80, 91, 0.06);
+  --purple-border: rgba(232, 80, 91, 0.2);
+  --warm-red:      #E8505B;
 
   --serif:         'EB Garamond', 'Georgia', serif;
   --mono:          'JetBrains Mono', monospace;
@@ -54,7 +64,7 @@ body {
 }
 
 ::selection {
-  background: rgba(139, 105, 20, 0.15);
+  background: rgba(232, 80, 91, 0.15);
   color: var(--text);
 }
 
@@ -237,7 +247,7 @@ body::before {
   font-weight: 600;
   color: var(--accent);
   background: var(--accent-bg);
-  border: 1px solid rgba(139, 105, 20, 0.15);
+  border: 1px solid rgba(196, 149, 106, 0.2);
   padding: 0.3rem 0.7rem;
   border-radius: 3px;
   letter-spacing: 0.04em;
@@ -357,8 +367,8 @@ body::before {
 }
 
 .flash-front {
-  background: var(--text);
-  color: var(--bg);
+  background: linear-gradient(135deg, #2C2620, #3A322A);
+  color: #FAF6F1;
 }
 
 .flash-front .q-label {
@@ -671,7 +681,7 @@ body::before {
 
 /* --- Concept Map ------------------------------------------- */
 .concept-map {
-  background: var(--text);
+  background: #2C2620;
   border-radius: 4px;
   padding: 1.5rem;
   color: var(--bg);
@@ -684,9 +694,9 @@ body::before {
 }
 
 .cm-dim { color: rgba(237, 232, 223, 0.35); }
-.cm-accent { color: #D4A855; font-weight: 700; }
+.cm-accent { color: #E8505B; font-weight: 700; }
 .cm-green { color: #7EBF8E; }
-.cm-yellow { color: #D4A855; }
+.cm-yellow { color: #C4956A; }
 
 /* --- B+ Timer Bar ------------------------------------------ */
 .timer-bar {
@@ -705,7 +715,7 @@ body::before {
   position: fixed;
   inset: 0;
   z-index: 300;
-  background: rgba(44, 38, 32, 0.94);
+  background: rgba(44, 38, 32, 0.92);
   display: flex;
   flex-direction: column;
   align-items: center;
