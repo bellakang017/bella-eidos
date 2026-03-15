@@ -4,7 +4,7 @@
    meets a personal learning sanctuary.
    ============================================================ */
 
-@import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500;1,600&family=JetBrains+Mono:wght@400;500;600&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400;0,500;0,600;0,700;0,800;1,400;1,500;1,600;1,700&family=JetBrains+Mono:wght@400;500;600&display=swap');
 
 /* --- Custom Properties ------------------------------------- */
 :root {
@@ -18,10 +18,10 @@
   --rule:          #2C2620;
   --rule-light:    rgba(44, 38, 32, 0.15);
 
-  --text:          #2C2620;
-  --text-body:     #4A423A;
-  --text-secondary:#8A8078;
-  --text-dim:      #B0A898;
+  --text:          #000000;
+  --text-body:     #1A1A1A;
+  --text-secondary:#555555;
+  --text-dim:      #999999;
 
   --accent:        #8B6914;
   --accent-hover:  #A37B1A;
@@ -34,7 +34,7 @@
   --purple-border: rgba(107, 91, 138, 0.2);
   --warm-red:      #A04030;
 
-  --serif:         'Cormorant Garamond', 'Georgia', serif;
+  --serif:         'EB Garamond', 'Georgia', serif;
   --mono:          'JetBrains Mono', monospace;
   --system:        -apple-system, 'Helvetica Neue', sans-serif;
 }
@@ -74,9 +74,9 @@ body::before {
 /* --- Typography -------------------------------------------- */
 .display-lg {
   font-family: var(--serif);
-  font-weight: 300;
+  font-weight: 400;
   font-style: italic;
-  font-size: 2.5rem;
+  font-size: 3rem;
   line-height: 1.2;
   letter-spacing: -0.01em;
   color: var(--text);
@@ -85,7 +85,7 @@ body::before {
 .display {
   font-family: var(--serif);
   font-weight: 400;
-  font-size: 1.75rem;
+  font-size: 2.1rem;
   line-height: 1.25;
   color: var(--text);
 }
@@ -93,7 +93,7 @@ body::before {
 .heading {
   font-family: var(--serif);
   font-weight: 600;
-  font-size: 1.35rem;
+  font-size: 1.6rem;
   line-height: 1.3;
   color: var(--text);
 }
@@ -101,34 +101,34 @@ body::before {
 .subheading {
   font-family: var(--serif);
   font-weight: 600;
-  font-size: 1.05rem;
+  font-size: 1.25rem;
   color: var(--text);
 }
 
 .body-text {
   font-family: var(--serif);
-  font-size: 1rem;
+  font-size: 1.15rem;
   color: var(--text-body);
-  line-height: 1.7;
+  line-height: 1.75;
 }
 
 .label {
   font-family: var(--mono);
-  font-size: 0.65rem;
+  font-size: 0.75rem;
   font-weight: 600;
-  letter-spacing: 0.12em;
+  letter-spacing: 0.1em;
   text-transform: uppercase;
   color: var(--text-secondary);
 }
 
 .mono {
   font-family: var(--mono);
-  font-size: 0.85rem;
+  font-size: 0.95rem;
 }
 
 .caption {
   font-family: var(--mono);
-  font-size: 0.7rem;
+  font-size: 0.8rem;
   color: var(--text-dim);
 }
 
@@ -162,8 +162,8 @@ body::before {
 .nav-brand {
   font-family: var(--serif);
   font-style: italic;
-  font-weight: 400;
-  font-size: 1.3rem;
+  font-weight: 500;
+  font-size: 1.5rem;
   color: var(--text);
   text-decoration: none;
   letter-spacing: 0.01em;
@@ -179,7 +179,7 @@ body::before {
 
 .nav-tab {
   font-family: var(--mono);
-  font-size: 0.7rem;
+  font-size: 0.8rem;
   font-weight: 500;
   color: var(--text-secondary);
   background: none;
@@ -312,7 +312,7 @@ body::before {
 .section-title {
   font-family: var(--serif);
   font-weight: 600;
-  font-size: 1.15rem;
+  font-size: 1.4rem;
   color: var(--text);
   padding-bottom: 0.5rem;
   border-bottom: 2px solid var(--rule);
@@ -321,7 +321,7 @@ body::before {
 
 .section-desc {
   font-family: var(--serif);
-  font-size: 0.95rem;
+  font-size: 1.1rem;
   color: var(--text-secondary);
   margin-bottom: 1.5rem;
   font-style: italic;
@@ -372,7 +372,7 @@ body::before {
 
 .flash-front .q-text {
   font-family: var(--serif);
-  font-size: 1.25rem;
+  font-size: 1.45rem;
   font-weight: 500;
   line-height: 1.5;
   color: var(--bg);
@@ -396,7 +396,7 @@ body::before {
 
 .flash-back .a-text {
   font-family: var(--serif);
-  font-size: 1rem;
+  font-size: 1.15rem;
   line-height: 1.7;
   color: var(--text-body);
 }
@@ -418,7 +418,7 @@ body::before {
 
 .flash-btn {
   font-family: var(--mono);
-  font-size: 0.75rem;
+  font-size: 0.85rem;
   font-weight: 500;
   padding: 0.5rem 1rem;
   border-radius: 3px;
@@ -474,12 +474,12 @@ body::before {
 
 .sandbox-input {
   width: 100%;
-  min-height: 200px;
-  padding: 1rem;
+  min-height: 220px;
+  padding: 1.25rem;
   border: 1px solid var(--border);
   border-radius: 3px;
   font-family: var(--mono);
-  font-size: 0.85rem;
+  font-size: 0.95rem;
   line-height: 1.8;
   resize: vertical;
   background: var(--card);
@@ -492,12 +492,12 @@ body::before {
 
 .sandbox-preview {
   width: 100%;
-  min-height: 200px;
-  padding: 1rem;
+  min-height: 220px;
+  padding: 1.25rem;
   border: 1px solid var(--border-light);
   border-radius: 3px;
   font-family: var(--serif);
-  font-size: 1rem;
+  font-size: 1.1rem;
   line-height: 1.7;
   background: #FFFFFF;
   overflow: auto;
@@ -564,7 +564,7 @@ body::before {
 
 .challenge-q {
   font-family: var(--serif);
-  font-size: 1rem;
+  font-size: 1.15rem;
   font-weight: 600;
   margin-bottom: 0.75rem;
   color: var(--text);
@@ -572,11 +572,11 @@ body::before {
 
 .challenge-input {
   width: 100%;
-  padding: 0.75rem;
+  padding: 0.85rem;
   border: 1px solid var(--border);
   border-radius: 3px;
   font-family: var(--mono);
-  font-size: 0.85rem;
+  font-size: 0.95rem;
   line-height: 1.6;
   resize: vertical;
   min-height: 50px;
@@ -635,7 +635,7 @@ body::before {
   gap: 0.75rem;
   padding: 0.65rem 0;
   border-bottom: 1px solid var(--border-light);
-  font-size: 0.9rem;
+  font-size: 1rem;
   color: var(--text-body);
 }
 
@@ -902,14 +902,14 @@ body::before {
 .domain-card .card-title {
   font-family: var(--serif);
   font-weight: 600;
-  font-size: 1.15rem;
+  font-size: 1.35rem;
   color: var(--text);
   margin-bottom: 0.3rem;
 }
 
 .domain-card .card-desc {
   font-family: var(--mono);
-  font-size: 0.7rem;
+  font-size: 0.85rem;
   color: var(--text-secondary);
   line-height: 1.5;
   margin-bottom: 0.5rem;
@@ -1055,11 +1055,19 @@ body::before {
   .sandbox-grid { grid-template-columns: 1fr; }
   .stat-grid { grid-template-columns: repeat(3, 1fr); gap: 0.5rem; }
   .nav { padding: 0.75rem 1rem; flex-wrap: wrap; gap: 0.5rem; }
+  .nav-brand { font-size: 1.3rem; }
   .nav-tabs { margin-left: 0; width: 100%; overflow-x: auto; scrollbar-width: none; }
   .nav-tabs::-webkit-scrollbar { display: none; }
-  .nav-tab { font-size: 0.65rem; padding: 0.35rem 0.6rem; white-space: nowrap; }
-  .display-lg { font-size: 1.75rem; }
-  .hub-container, .page-container { padding: 0 1rem; }
-  .flash-front .q-text { font-size: 1.05rem; }
+  .nav-tab { font-size: 0.75rem; padding: 0.4rem 0.65rem; white-space: nowrap; }
+  .display-lg { font-size: 2.1rem; }
+  .display { font-size: 1.6rem; }
+  .heading { font-size: 1.35rem; }
+  .section-title { font-size: 1.2rem; }
+  .hub-container, .page-container { padding: 0 1.25rem; }
+  .flash-front .q-text { font-size: 1.2rem; }
+  .flash-back .a-text { font-size: 1.05rem; }
+  .domain-card .card-title { font-size: 1.2rem; }
   .session-complete-overlay .complete-stats { grid-template-columns: repeat(3, 1fr); gap: 1rem; }
+  .card { padding: 1.25rem; }
+  .challenge { padding: 1rem 1.25rem; }
 }
