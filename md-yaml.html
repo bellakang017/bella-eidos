@@ -1,0 +1,767 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>MD / YAML Trainer — bella eidos</title>
+<link rel="stylesheet" href="css/eidos.css">
+<style>
+  /* Page-level utilities */
+  .page { display: none; }
+  .page.active { display: block; }
+
+  .section-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 22px;
+    font-weight: 600;
+    color: var(--text);
+    margin-bottom: var(--sp-3);
+    padding-bottom: var(--sp-2);
+    border-bottom: 1px solid var(--border);
+  }
+
+  .section-desc {
+    color: var(--text-secondary);
+    font-size: 14px;
+    margin-bottom: var(--sp-6);
+  }
+
+  /* Nav overrides for center tabs */
+  .nav-left {
+    display: flex;
+    align-items: center;
+    gap: var(--sp-3);
+    flex-shrink: 0;
+  }
+
+  .nav-left a {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 12px;
+    font-weight: 500;
+    color: var(--text-secondary);
+    text-decoration: none;
+  }
+  .nav-left a:hover { color: var(--text); }
+
+  .nav-right {
+    display: flex;
+    align-items: center;
+    gap: var(--sp-3);
+    margin-left: auto;
+    flex-shrink: 0;
+  }
+
+  /* Glossary styling */
+  .glossary-category {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+    color: var(--text-secondary);
+    margin-bottom: var(--sp-2);
+  }
+
+  .glossary-sub {
+    font-size: 12px;
+    color: var(--text-dim);
+    margin-top: var(--sp-1);
+    margin-bottom: var(--sp-4);
+  }
+
+  .glossary-term {
+    min-width: 120px;
+    font-weight: 700;
+    color: var(--text);
+    flex-shrink: 0;
+  }
+
+  .glossary-def {
+    color: var(--text-secondary);
+    font-size: 14px;
+    line-height: 1.6;
+  }
+
+  .glossary-def strong {
+    color: var(--text);
+  }
+
+  /* Symbol tables */
+  .symbol-table {
+    width: 100%;
+    font-size: 14px;
+    border-collapse: collapse;
+  }
+
+  .symbol-table td {
+    padding: 12px 0;
+    vertical-align: top;
+  }
+
+  .symbol-table tr {
+    border-bottom: 1px solid var(--border);
+  }
+
+  .symbol-table tr:last-child {
+    border-bottom: none;
+  }
+
+  .symbol-char {
+    width: 60px;
+    font-size: 20px;
+    text-align: center;
+    font-family: 'JetBrains Mono', monospace;
+    color: var(--accent);
+  }
+
+  .symbol-desc {
+    padding-left: var(--sp-2);
+    padding-right: var(--sp-2);
+  }
+
+  .symbol-note {
+    color: var(--text-dim);
+    font-size: 12px;
+  }
+
+  /* Clickable symbols grid */
+  .symbols-grid {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 16px;
+    line-height: 2.5;
+    letter-spacing: 4px;
+    text-align: center;
+    padding: var(--sp-3) 0;
+  }
+
+  .symbols-grid span {
+    cursor: pointer;
+    transition: color 0.2s;
+    color: var(--text);
+  }
+
+  .symbols-grid span:hover {
+    color: var(--accent);
+  }
+
+  /* Ref tables */
+  .ref-table {
+    width: 100%;
+    font-size: 14px;
+    border-collapse: collapse;
+  }
+
+  .ref-table td {
+    padding: 10px 0;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .ref-table tr:last-child td {
+    border-bottom: none;
+  }
+
+  .ref-table .mono-col {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 13px;
+    width: 200px;
+    color: var(--accent);
+  }
+
+  /* Ref key container */
+  .ref-keys {
+    min-width: 160px;
+    display: flex;
+    gap: 4px;
+    align-items: center;
+    flex-wrap: wrap;
+  }
+
+  .ref-plus {
+    color: var(--text-dim);
+    font-size: 12px;
+  }
+
+  .ref-desc {
+    color: var(--text);
+    font-size: 14px;
+  }
+
+  /* Tip card */
+  .tip-card {
+    background: var(--accent-light);
+    border: 1px solid var(--border-hover);
+    border-radius: var(--radius-lg);
+    padding: var(--sp-6);
+    font-size: 14px;
+    line-height: 1.7;
+    color: var(--text);
+    margin-top: var(--sp-5);
+  }
+
+  .tip-card strong {
+    color: var(--accent);
+  }
+
+  /* Sandbox column labels */
+  .sandbox-col-label {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+    color: var(--text-secondary);
+    margin-bottom: var(--sp-2);
+  }
+
+  /* Challenge question */
+  .challenge-q {
+    font-size: 15px;
+    font-weight: 600;
+    margin-bottom: var(--sp-3);
+    color: var(--text);
+  }
+
+  /* Mobile */
+  @media (max-width: 640px) {
+    .nav-left .nav-brand { font-size: 16px; }
+    .symbols-grid { letter-spacing: 2px; font-size: 14px; }
+    .glossary-term { min-width: 90px; font-size: 13px; }
+    .ref-table .mono-col { width: 140px; font-size: 12px; }
+    .symbol-char { width: 40px; font-size: 16px; }
+  }
+</style>
+</head>
+<body>
+
+<!-- ====== NAV ====== -->
+<nav class="nav">
+  <div class="nav-left">
+    <a href="index.html">&larr; Hub</a>
+    <span class="nav-brand">bella eidos</span>
+  </div>
+
+  <div class="nav-tabs">
+    <button class="nav-tab active" data-page="recall" onclick="EidosTrainer.showPage('recall')">Recall</button>
+    <button class="nav-tab" data-page="sandbox" onclick="EidosTrainer.showPage('sandbox')">Sandbox</button>
+    <button class="nav-tab" data-page="challenge" onclick="EidosTrainer.showPage('challenge')">Challenge</button>
+    <button class="nav-tab" data-page="glossary" onclick="EidosTrainer.showPage('glossary')">Glossary</button>
+    <button class="nav-tab" data-page="symbols" onclick="EidosTrainer.showPage('symbols')">Symbols</button>
+    <button class="nav-tab" data-page="ref" onclick="EidosTrainer.showPage('ref')">Ref</button>
+  </div>
+
+  <div class="nav-right">
+    <span class="nav-timer">90:00</span>
+    <span class="zpd-indicator too-easy" id="zpd-badge">Gathering data...</span>
+  </div>
+</nav>
+
+<!-- ====== TIMER BAR ====== -->
+<div class="timer-bar" style="width:100%;"></div>
+
+<!-- ====== MAIN CONTAINER ====== -->
+<div class="page-container">
+
+<!-- ==================== RECALL (Flashcards) ==================== -->
+<div class="page active" id="page-recall">
+  <div class="section-title">Recall</div>
+  <div class="section-desc">카드를 클릭하면 답이 나와. 매일 한 번 전체 복습 권장.</div>
+
+  <div class="flashcard-container">
+    <div class="flashcard" id="flashcard" onclick="EidosTrainer.flipCard()">
+      <div class="flash-face flash-front">
+        <div class="label" style="color:var(--text-dim);margin-bottom:var(--sp-4);">질문</div>
+        <div id="fc-question" style="font-family:'Cormorant Garamond',serif;font-size:20px;font-weight:500;line-height:1.5;"></div>
+      </div>
+      <div class="flash-face flash-back">
+        <div class="label" style="color:var(--purple);margin-bottom:var(--sp-4);">답</div>
+        <div id="fc-answer" style="font-size:15px;line-height:1.7;"></div>
+      </div>
+    </div>
+  </div>
+  <div class="flash-hint" id="fc-hint">클릭해서 뒤집기</div>
+  <div class="caption" style="text-align:center;margin-bottom:var(--sp-2);" id="fc-counter"></div>
+  <div class="flash-nav">
+    <button class="flash-btn dunno" onclick="EidosTrainer.markCard(false)">다시 볼래</button>
+    <button class="flash-btn" onclick="EidosTrainer.prevCard()">&larr; 이전</button>
+    <button class="flash-btn" onclick="EidosTrainer.nextCard()">다음 &rarr;</button>
+    <button class="flash-btn know" onclick="EidosTrainer.markCard(true)">알아!</button>
+  </div>
+
+  <div style="margin-top:var(--sp-10);">
+    <div class="section-title">개념 지도</div>
+    <div class="concept-map"><span class="cm-accent">마크다운 기초</span>
+<span class="cm-dim">│</span>
+<span class="cm-dim">├──</span> <span class="cm-green">#</span>  헤딩 (층 나누기: # = 1층, ## = 2층, ### = 3층)
+<span class="cm-dim">├──</span> <span class="cm-green">**</span> 굵게  <span class="cm-dim">│</span>  <span class="cm-green">*</span> 기울임  <span class="cm-dim">│</span>  <span class="cm-green">==</span> 하이라이트
+<span class="cm-dim">├──</span> <span class="cm-green">`</span>  백틱 1개 = 인라인 코드 (용어 강조)
+<span class="cm-dim">├──</span> <span class="cm-green">```</span> 백틱 3개 = 코드 블록 (여러 줄 보여주기용)
+<span class="cm-dim">├──</span> <span class="cm-green">---</span> 맨 위 = frontmatter 울타리 <span class="cm-dim">│</span> 본문 중간 = 수평선
+<span class="cm-dim">├──</span> <span class="cm-green">- </span> 리스트  <span class="cm-dim">│</span>  <span class="cm-green">Tab</span> = 하위 항목 (들여쓰기)
+<span class="cm-dim">└──</span> <span class="cm-green">[[  ]]</span> 옵시디언 링크 (다른 노트로 연결)
+
+<span class="cm-accent">YAML / Frontmatter</span>
+<span class="cm-dim">│</span>
+<span class="cm-dim">├──</span> 규칙: <span class="cm-accent">이름: 값</span> (콜론 + 띄어쓰기 1칸)
+<span class="cm-dim">├──</span> 여러 값: <span class="cm-accent">[a, b, c]</span> (대괄호 + 쉼표)
+<span class="cm-dim">├──</span> 특수문자 포함: <span class="cm-accent">"값"</span> (큰따옴표로 감싸기)
+<span class="cm-dim">└──</span> 위치: 노트 <span class="cm-accent">맨 첫 줄</span>에서 --- 로 시작, --- 로 끝
+
+<span class="cm-accent">온톨로지 용어</span>
+<span class="cm-dim">│</span>
+<span class="cm-dim">├──</span> 온톨로지 = <span class="cm-accent">설계도</span> (데이터 간 관계 규칙)
+<span class="cm-dim">├──</span> 지식 그래프 = 설계도에 <span class="cm-accent">실제 데이터</span>가 채워진 것
+<span class="cm-dim">├──</span> SPARQL = 지식 그래프에 <span class="cm-accent">질문</span>하는 언어
+<span class="cm-dim">├──</span> 벡터 임베딩 = 비슷한 것끼리 <span class="cm-accent">가까이</span> 놓기
+<span class="cm-dim">└──</span> SHACL = 규칙대로 데이터 넣었는지 <span class="cm-accent">검사</span></div>
+  </div>
+</div>
+
+<!-- ==================== SANDBOX ==================== -->
+<div class="page" id="page-sandbox">
+  <div class="section-title">Sandbox</div>
+  <div class="section-desc">왼쪽에 마크다운을 타이핑하면 오른쪽에서 결과를 바로 볼 수 있어.</div>
+
+  <div class="sandbox-grid">
+    <div>
+      <div class="sandbox-col-label">타이핑 (마크다운)</div>
+      <textarea class="sandbox-input" id="sandboxInput" oninput="EidosTrainer.renderPreview()" placeholder="여기에 마크다운을 쳐봐!
+
+예시:
+---
+type: concept
+date: 2026-03-15
+---
+
+# 제목
+
+본문 텍스트
+
+`용어 강조`
+
+**굵게** *기울임* ==하이라이트==
+
+- 리스트 1
+- 리스트 2
+  - 하위 항목">---
+type: concept
+date: 2026-03-15
+tags: [ontology, learning]
+---
+
+# 온톨로지
+
+데이터 간의 관계 규칙을 정의하는 **설계도**.
+
+## 핵심 이해
+
+`온톨로지`가 없으면 데이터는 그냥 나열.
+`온톨로지`가 있으면 데이터에 ==인과성==이 생김.
+
+## 연결
+
+- [[Knowledge-Graph]] — 규칙에 데이터가 채워진 결과물
+- [[SPARQL]] — 규칙 위에서 질문하는 언어</textarea>
+    </div>
+    <div>
+      <div class="sandbox-col-label">미리보기 (옵시디언에서 보이는 것)</div>
+      <div class="sandbox-preview" id="sandboxPreview"></div>
+    </div>
+  </div>
+
+  <div class="tip-card">
+    <strong>실험 아이디어:</strong>
+    위 입력창에서 이것들을 바꿔보면서 차이를 확인해봐:
+    <br>&#8226; <code>#</code> 개수를 1개 → 3개로 바꿔보기
+    <br>&#8226; <code>---</code> 를 본문 중간에 넣어보기
+    <br>&#8226; <code>`백틱`</code> 1개 vs <code>```백틱 3개```</code> 차이 확인
+    <br>&#8226; frontmatter에 <code>status: learning</code> 추가해보기
+  </div>
+</div>
+
+<!-- ==================== CHALLENGE ==================== -->
+<div class="page" id="page-challenge">
+  <div class="section-title">Challenge</div>
+  <div class="section-desc">직접 타이핑해서 제출. 정답과 비교해볼 수 있어.</div>
+
+  <div id="challengeList"></div>
+
+  <div style="text-align:center; margin-top:var(--sp-6);">
+    <button class="flash-btn" onclick="EidosTrainer.resetChallenges()" style="font-size:14px;">새 문제 세트</button>
+  </div>
+</div>
+
+<!-- ==================== GLOSSARY ==================== -->
+<div class="page" id="page-glossary">
+  <div class="section-title">Glossary</div>
+  <div class="section-desc">대부분 일상 사물에서 왔어. 원래 뜻을 알면 컴퓨터 뜻이 자동으로 추론돼.</div>
+
+  <!-- 건축/건설 -->
+  <div class="card" style="margin-bottom:var(--sp-5);">
+    <div class="glossary-category">건축/건설에서 온 용어</div>
+    <div class="glossary-sub">건물을 짓는 것처럼 소프트웨어를 "짓는다"</div>
+    <div class="ref-row"><div class="glossary-term">Framework</div><div class="glossary-def"><strong>건물 뼈대 (철골)</strong> → 코드의 기본 구조. 뼈대가 있고 살만 붙이면 됨.</div></div>
+    <div class="ref-row"><div class="glossary-term">Stack</div><div class="glossary-def"><strong>접시 쌓기</strong> → 기술을 층층이 쌓은 것. "tech stack" = 프로젝트에 쓴 기술 층.</div></div>
+    <div class="ref-row"><div class="glossary-term">Architecture</div><div class="glossary-def"><strong>건축 설계</strong> → 시스템 전체 구조 설계.</div></div>
+    <div class="ref-row"><div class="glossary-term">Scaffolding</div><div class="glossary-def"><strong>공사장 비계</strong> → 초기 뼈대 코드 자동 생성. 완성 후 걷어냄.</div></div>
+    <div class="ref-row"><div class="glossary-term">Build</div><div class="glossary-def"><strong>건물 짓기</strong> → 코드를 실행 가능한 프로그램으로 조립.</div></div>
+    <div class="ref-row"><div class="glossary-term">Deploy</div><div class="glossary-def"><strong>군대 배치</strong> → 완성된 프로그램을 실제 서버에 올리기.</div></div>
+  </div>
+
+  <!-- 물/배관 -->
+  <div class="card" style="margin-bottom:var(--sp-5);">
+    <div class="glossary-category">물/배관에서 온 용어</div>
+    <div class="glossary-sub">데이터가 물처럼 "흐른다"</div>
+    <div class="ref-row"><div class="glossary-term">Pipeline</div><div class="glossary-def"><strong>수도관/송유관</strong> → 데이터가 단계별로 흘러가는 처리 과정. A → B → C.</div></div>
+    <div class="ref-row"><div class="glossary-term">Stream</div><div class="glossary-def"><strong>시냇물</strong> → 데이터가 끊김 없이 연속으로 흘러옴.</div></div>
+    <div class="ref-row"><div class="glossary-term">Port</div><div class="glossary-def"><strong>항구</strong> → 컴퓨터의 출입구. 데이터가 드나드는 문.</div></div>
+    <div class="ref-row"><div class="glossary-term">Socket</div><div class="glossary-def"><strong>전기 콘센트</strong> → 두 프로그램이 연결되는 접점.</div></div>
+    <div class="ref-row"><div class="glossary-term">Flush</div><div class="glossary-def"><strong>물 내리기</strong> → 임시 저장된 데이터를 한꺼번에 내보내기.</div></div>
+  </div>
+
+  <!-- 물건/공간 -->
+  <div class="card" style="margin-bottom:var(--sp-5);">
+    <div class="glossary-category">물건/공간에서 온 용어</div>
+    <div class="glossary-sub">보이지 않는 것을 보이는 물건에 비유</div>
+    <div class="ref-row"><div class="glossary-term">Container</div><div class="glossary-def"><strong>화물 컨테이너</strong> → 프로그램을 상자에 넣어서 어디서든 동일하게 실행.</div></div>
+    <div class="ref-row"><div class="glossary-term">Sandbox</div><div class="glossary-def"><strong>모래놀이터</strong> → 안전한 실험 공간. 진짜 시스템에 영향 없음.</div></div>
+    <div class="ref-row"><div class="glossary-term">Repository</div><div class="glossary-def"><strong>저장소/창고</strong> → 코드를 보관하는 곳 (GitHub 등).</div></div>
+    <div class="ref-row"><div class="glossary-term">Library</div><div class="glossary-def"><strong>도서관</strong> → 미리 만들어진 코드 모음. 필요할 때 빌려 쓰기.</div></div>
+    <div class="ref-row"><div class="glossary-term">Cache</div><div class="glossary-def"><strong>숨겨둔 보급품</strong> (프랑스어 cacher=숨기다) → 자주 쓰는 데이터를 가까이 숨겨두고 빠르게 꺼냄.</div></div>
+    <div class="ref-row"><div class="glossary-term">Bucket</div><div class="glossary-def"><strong>양동이</strong> → 데이터를 담는 큰 통 (클라우드 저장소).</div></div>
+    <div class="ref-row"><div class="glossary-term">Token</div><div class="glossary-def"><strong>동전/토큰</strong> → 데이터의 최소 단위. LLM에서 단어 쪼개진 조각.</div></div>
+  </div>
+
+  <!-- 사람/행동 -->
+  <div class="card" style="margin-bottom:var(--sp-5);">
+    <div class="glossary-category">사람/행동에서 온 용어</div>
+    <div class="glossary-sub">사람이 하는 행동으로 컴퓨터 작업을 설명</div>
+    <div class="ref-row"><div class="glossary-term">Bug</div><div class="glossary-def"><strong>벌레</strong> → 코드 오류. 1947년 진짜 나방이 컴퓨터에 끼어서 고장, 여기서 유래.</div></div>
+    <div class="ref-row"><div class="glossary-term">Debugging</div><div class="glossary-def"><strong>벌레 잡기</strong> → 오류 찾아서 고치기.</div></div>
+    <div class="ref-row"><div class="glossary-term">Daemon</div><div class="glossary-def"><strong>수호신</strong> (그리스 신화) → 백그라운드에서 조용히 돌아가는 프로그램.</div></div>
+    <div class="ref-row"><div class="glossary-term">Fork</div><div class="glossary-def"><strong>포크 (갈림길)</strong> → 프로젝트를 복사해서 다른 방향으로 개발.</div></div>
+    <div class="ref-row"><div class="glossary-term">Clone</div><div class="glossary-def"><strong>복제</strong> → 저장소를 그대로 복사해서 내 컴퓨터에.</div></div>
+    <div class="ref-row"><div class="glossary-term">Push / Pull</div><div class="glossary-def"><strong>밀다 / 당기다</strong> → 코드를 서버에 올리기 / 서버에서 가져오기.</div></div>
+    <div class="ref-row"><div class="glossary-term">Merge</div><div class="glossary-def"><strong>합치다</strong> → 두 갈래 코드를 하나로.</div></div>
+  </div>
+
+  <!-- 온톨로지/데이터 -->
+  <div class="card" style="margin-bottom:var(--sp-5);">
+    <div class="glossary-category">온톨로지/데이터 용어</div>
+    <div class="glossary-sub">Bella가 강의에서 배운 것</div>
+    <div class="ref-row"><div class="glossary-term">Ontology</div><div class="glossary-def"><strong>존재론</strong> (철학: "뭐가 존재하는가?") → 데이터 세계의 존재 규칙. 뭐가 있고 어떻게 연결되는가.</div></div>
+    <div class="ref-row"><div class="glossary-term">Schema</div><div class="glossary-def"><strong>형태/구조</strong> (그리스어) → 데이터의 구조 정의서.</div></div>
+    <div class="ref-row"><div class="glossary-term">Graph</div><div class="glossary-def"><strong>그래프 (점+선)</strong> → 노드(점)와 엣지(선)로 관계를 표현.</div></div>
+    <div class="ref-row"><div class="glossary-term">Node</div><div class="glossary-def"><strong>매듭</strong> → 그래프의 한 점 (하나의 데이터).</div></div>
+    <div class="ref-row"><div class="glossary-term">Edge</div><div class="glossary-def"><strong>가장자리/연결선</strong> → 노드 사이의 관계.</div></div>
+    <div class="ref-row"><div class="glossary-term">Query</div><div class="glossary-def"><strong>질문</strong> (라틴어 quaerere) → 데이터에 던지는 질문.</div></div>
+    <div class="ref-row"><div class="glossary-term">Index</div><div class="glossary-def"><strong>책 색인</strong> → 데이터를 빨리 찾기 위한 목차.</div></div>
+    <div class="ref-row"><div class="glossary-term">Embedding</div><div class="glossary-def"><strong>끼워 넣기</strong> → 데이터를 숫자 공간에 끼워 넣어 위치 부여.</div></div>
+    <div class="ref-row"><div class="glossary-term">Hallucination</div><div class="glossary-def"><strong>환각</strong> → LLM이 실제로 없는 정보를 있다고 생성하는 현상.</div></div>
+    <div class="ref-row"><div class="glossary-term">Grounding</div><div class="glossary-def"><strong>접지 (땅에 닿게 하기)</strong> → LLM 출력을 실제 데이터에 대조해서 검증.</div></div>
+  </div>
+
+  <div class="tip-card">
+    <strong>패턴 인식 팁:</strong> 새로운 기술 용어를 만나면 "이 단어의 일상적 뜻이 뭐지?" 물어봐. 그러면 컴퓨터에서의 역할이 거의 자동으로 추론돼.
+    <br><br><em style="color:var(--text-secondary);">예: "Docker" = 부두 노동자(docker). 컨테이너를 싣고 내리는 사람 → 컨테이너를 관리하는 도구.</em>
+  </div>
+</div>
+
+<!-- ==================== SYMBOLS ==================== -->
+<div class="page" id="page-symbols">
+  <div class="section-title">Symbols</div>
+  <div class="section-desc">Mac + 옵시디언에서 자주 쓰는 심볼. 왜 이 키 조합인지도 같이.</div>
+
+  <!-- 마크다운 핵심 심볼 -->
+  <div class="card" style="margin-bottom:var(--sp-5);">
+    <div class="glossary-category">마크다운 핵심 심볼</div>
+    <table class="symbol-table">
+      <tr>
+        <td class="symbol-char">#</td>
+        <td class="symbol-desc"><strong>헤딩</strong><br><span class="symbol-note">Shift + 3. 숫자 3 위의 기호.</span></td>
+        <td class="symbol-note">건물 층 나누기</td>
+      </tr>
+      <tr>
+        <td class="symbol-char">` &#8361;</td>
+        <td class="symbol-desc"><strong>백틱</strong><br><span class="symbol-note">숫자 1 왼쪽 키. 한글=&#8361;, 영문=`</span></td>
+        <td class="symbol-note">코드/용어 강조</td>
+      </tr>
+      <tr>
+        <td class="symbol-char">---</td>
+        <td class="symbol-desc"><strong>하이픈 3개</strong><br><span class="symbol-note">- 키 3번</span></td>
+        <td class="symbol-note">frontmatter 울타리 / 수평선</td>
+      </tr>
+      <tr>
+        <td class="symbol-char">*</td>
+        <td class="symbol-desc"><strong>별표 (asterisk)</strong><br><span class="symbol-note">Shift + 8</span></td>
+        <td class="symbol-note">*기울임* **굵게** 리스트</td>
+      </tr>
+      <tr>
+        <td class="symbol-char">[ ]</td>
+        <td class="symbol-desc"><strong>대괄호</strong><br><span class="symbol-note">[ = ㅂ 옆 키, ] = 그 오른쪽</span></td>
+        <td class="symbol-note">YAML 목록 [a, b] / 링크 [[note]]</td>
+      </tr>
+      <tr>
+        <td class="symbol-char">==</td>
+        <td class="symbol-desc"><strong>등호 2개</strong><br><span class="symbol-note">= 키 2번 (Shift 안 누름)</span></td>
+        <td class="symbol-note">==하이라이트== (노란 형광펜)</td>
+      </tr>
+      <tr>
+        <td class="symbol-char">:</td>
+        <td class="symbol-desc"><strong>콜론</strong><br><span class="symbol-note">Shift + ; (세미콜론 키)</span></td>
+        <td class="symbol-note">YAML의 핵심: 이름: 값</td>
+      </tr>
+    </table>
+  </div>
+
+  <!-- 특수 문자 입력 -->
+  <div class="card" style="margin-bottom:var(--sp-5);">
+    <div class="glossary-category">특수 문자 입력</div>
+    <table class="symbol-table">
+      <tr>
+        <td class="symbol-char">&mdash;</td>
+        <td class="symbol-desc"><strong>em dash</strong><br><span class="key">Opt</span> <span class="ref-plus">+</span> <span class="key">Shift</span> <span class="ref-plus">+</span> <span class="key">-</span></td>
+        <td class="symbol-note">하이픈(-)의 "변형(Opt) + 확장(Shift)" 버전</td>
+      </tr>
+      <tr>
+        <td class="symbol-char">&ndash;</td>
+        <td class="symbol-desc"><strong>en dash</strong><br><span class="key">Opt</span> <span class="ref-plus">+</span> <span class="key">-</span></td>
+        <td class="symbol-note">하이픈(-)의 "변형(Opt)" 버전. 숫자 범위에 사용 (1&ndash;10)</td>
+      </tr>
+      <tr>
+        <td class="symbol-char">&hellip;</td>
+        <td class="symbol-desc"><strong>말줄임표</strong><br><span class="key">Opt</span> <span class="ref-plus">+</span> <span class="key">;</span></td>
+        <td class="symbol-note">... 대신 한 글자로</td>
+      </tr>
+      <tr>
+        <td class="symbol-char">&rarr; &larr;</td>
+        <td class="symbol-desc"><strong>화살표</strong><br><span class="key">Cmd</span> <span class="ref-plus">+</span> <span class="key">Ctrl</span> <span class="ref-plus">+</span> <span class="key">Space</span> → "arrow" 검색</td>
+        <td class="symbol-note">특수문자 입력기에서 검색</td>
+      </tr>
+      <tr>
+        <td class="symbol-char" style="letter-spacing:2px;">&#8984; &#8997; &#8679; &#8963;</td>
+        <td class="symbol-desc"><strong>키보드 심볼</strong><br><span class="symbol-note">특수문자 입력기에서 "command" 등 검색</span></td>
+        <td class="symbol-note">&#8984;=Cmd &#8997;=Opt &#8679;=Shift &#8963;=Ctrl</td>
+      </tr>
+    </table>
+  </div>
+
+  <!-- 복사해서 쓰기 -->
+  <div class="card" style="margin-bottom:var(--sp-5);">
+    <div class="glossary-category">자주 쓰는 화살표 &amp; 심볼 (복사해서 쓰기)</div>
+    <div class="symbols-grid">
+      <span title="오른쪽 화살표" onclick="EidosTrainer.copySymbol('→')">→</span>
+      <span title="왼쪽 화살표" onclick="EidosTrainer.copySymbol('←')">←</span>
+      <span title="위 화살표" onclick="EidosTrainer.copySymbol('↑')">↑</span>
+      <span title="아래 화살표" onclick="EidosTrainer.copySymbol('↓')">↓</span>
+      <span title="양방향" onclick="EidosTrainer.copySymbol('↔')">↔</span>
+      <span title="em dash" onclick="EidosTrainer.copySymbol('—')">—</span>
+      <span title="en dash" onclick="EidosTrainer.copySymbol('–')">–</span>
+      <span title="말줄임" onclick="EidosTrainer.copySymbol('…')">…</span>
+      <span title="체크" onclick="EidosTrainer.copySymbol('✓')">✓</span>
+      <span title="엑스" onclick="EidosTrainer.copySymbol('✗')">✗</span>
+      <span title="별" onclick="EidosTrainer.copySymbol('★')">★</span>
+      <span title="큰따옴표 열기" onclick="EidosTrainer.copySymbol('\u201C')">&ldquo;</span>
+      <span title="큰따옴표 닫기" onclick="EidosTrainer.copySymbol('\u201D')">&rdquo;</span>
+    </div>
+    <div class="caption" style="text-align:center;">심볼을 클릭하면 복사돼!</div>
+    <div id="copyAlert" style="display:none;text-align:center;color:var(--green);font-size:13px;font-weight:600;margin-top:4px;"></div>
+  </div>
+
+  <!-- 옵시디언 전용 단축키 -->
+  <div class="card" style="margin-bottom:var(--sp-5);">
+    <div class="glossary-category">옵시디언 전용 단축키</div>
+    <div class="ref-row">
+      <div class="ref-keys"><span class="key">Cmd</span><span class="ref-plus">+</span><span class="key">E</span></div>
+      <div class="ref-desc">편집 모드 ↔ 읽기 모드 전환</div>
+    </div>
+    <div class="ref-row">
+      <div class="ref-keys"><span class="key">Cmd</span><span class="ref-plus">+</span><span class="key">K</span></div>
+      <div class="ref-desc">외부 링크 삽입</div>
+    </div>
+    <div class="ref-row">
+      <div class="ref-keys"><span class="key">Cmd</span><span class="ref-plus">+</span><span class="key">O</span></div>
+      <div class="ref-desc">Quick Switcher (노트 빠르게 열기)</div>
+    </div>
+    <div class="ref-row">
+      <div class="ref-keys"><span class="key">Cmd</span><span class="ref-plus">+</span><span class="key">P</span></div>
+      <div class="ref-desc">Command Palette (모든 명령 검색)</div>
+    </div>
+    <div class="ref-row">
+      <div class="ref-keys"><span class="key">[</span><span class="key">[</span></div>
+      <div class="ref-desc">노트 링크 자동완성 시작 (타이핑하면 노트 목록 뜸)</div>
+    </div>
+    <div class="ref-row">
+      <div class="ref-keys"><span class="key">Cmd</span><span class="ref-plus">+</span><span class="key">Shift</span><span class="ref-plus">+</span><span class="key">F</span></div>
+      <div class="ref-desc">전체 vault에서 검색 (Find = 찾기의 확장 버전)</div>
+    </div>
+  </div>
+
+  <div class="tip-card">
+    <strong>단축키 읽는 법:</strong>
+    <br>조합을 볼 때 이렇게 해석해:
+    <br>&#8226; <strong>Cmd</strong> = "이걸 해" (기본 명령)
+    <br>&#8226; <strong>+ Shift</strong> = "확장/반대 버전으로"
+    <br>&#8226; <strong>+ Option</strong> = "변형 버전으로"
+    <br>&#8226; 마지막 글자 = 행동 (S=Save, F=Find, K=linK, E=Edit, O=Open, P=Palette)
+  </div>
+</div>
+
+<!-- ==================== REF ==================== -->
+<div class="page" id="page-ref">
+  <div class="section-title">Reference</div>
+
+  <!-- 키보드 단축키 -->
+  <div class="card" style="margin-bottom:var(--sp-5);">
+    <div class="glossary-category">키보드 단축키</div>
+    <div class="ref-row">
+      <div class="ref-keys"><span class="key">&#8361;</span></div>
+      <div class="ref-desc">백틱 (한글 모드). 용어 강조용.</div>
+    </div>
+    <div class="ref-row">
+      <div class="ref-keys"><span class="key">&#8361;&#8361;&#8361;</span></div>
+      <div class="ref-desc">코드 블록 열기/닫기. 닫을 때 새 줄에 단독으로.</div>
+    </div>
+    <div class="ref-row">
+      <div class="ref-keys"><span class="key">Opt</span><span class="ref-plus">+</span><span class="key">Shift</span><span class="ref-plus">+</span><span class="key">-</span></div>
+      <div class="ref-desc">em dash &mdash; 입력</div>
+    </div>
+    <div class="ref-row">
+      <div class="ref-keys"><span class="key">Cmd</span><span class="ref-plus">+</span><span class="key">B</span></div>
+      <div class="ref-desc"><strong>굵게</strong> (Bold)</div>
+    </div>
+    <div class="ref-row">
+      <div class="ref-keys"><span class="key">Cmd</span><span class="ref-plus">+</span><span class="key">I</span></div>
+      <div class="ref-desc"><em>기울임</em> (Italic)</div>
+    </div>
+  </div>
+
+  <!-- 마크다운 문법 -->
+  <div class="card" style="margin-bottom:var(--sp-5);">
+    <div class="glossary-category">마크다운 문법</div>
+    <table class="ref-table">
+      <tr>
+        <td class="mono-col"># 텍스트</td>
+        <td>제목 1 (가장 큰)</td>
+      </tr>
+      <tr>
+        <td class="mono-col">## 텍스트</td>
+        <td>제목 2</td>
+      </tr>
+      <tr>
+        <td class="mono-col">### 텍스트</td>
+        <td>제목 3</td>
+      </tr>
+      <tr>
+        <td class="mono-col">**텍스트**</td>
+        <td><strong>굵게</strong></td>
+      </tr>
+      <tr>
+        <td class="mono-col">*텍스트*</td>
+        <td><em>기울임</em></td>
+      </tr>
+      <tr>
+        <td class="mono-col">==텍스트==</td>
+        <td><mark>하이라이트</mark></td>
+      </tr>
+      <tr>
+        <td class="mono-col">`텍스트`</td>
+        <td><code>인라인 코드</code></td>
+      </tr>
+      <tr>
+        <td class="mono-col">```여러줄```</td>
+        <td>코드 블록</td>
+      </tr>
+      <tr>
+        <td class="mono-col">- 텍스트</td>
+        <td>&#8226; 리스트 항목</td>
+      </tr>
+      <tr>
+        <td class="mono-col">[[노트이름]]</td>
+        <td><a href="#">노트 링크</a> (옵시디언)</td>
+      </tr>
+      <tr>
+        <td class="mono-col">---</td>
+        <td>frontmatter 울타리 / 수평선</td>
+      </tr>
+    </table>
+  </div>
+
+  <!-- YAML 값 종류 -->
+  <div class="card" style="margin-bottom:var(--sp-5);">
+    <div class="glossary-category">YAML 값 종류</div>
+    <table class="ref-table">
+      <tr>
+        <td style="width:100px;font-weight:600;">텍스트</td>
+        <td class="mono-col" style="width:auto;">type: concept</td>
+        <td class="symbol-note">그냥 쓰기</td>
+      </tr>
+      <tr>
+        <td style="font-weight:600;">날짜</td>
+        <td class="mono-col" style="width:auto;">date: 2026-03-15</td>
+        <td class="symbol-note">년-월-일</td>
+      </tr>
+      <tr>
+        <td style="font-weight:600;">목록</td>
+        <td class="mono-col" style="width:auto;">tags: [a, b, c]</td>
+        <td class="symbol-note">대괄호 + 쉼표</td>
+      </tr>
+      <tr>
+        <td style="font-weight:600;">특수문자 포함</td>
+        <td class="mono-col" style="width:auto;">url: "https://..."</td>
+        <td class="symbol-note">큰따옴표로 감싸기</td>
+      </tr>
+    </table>
+  </div>
+
+  <!-- 키보드 키 의미 -->
+  <div class="card">
+    <div class="glossary-category">키보드 키 의미</div>
+    <div class="ref-row">
+      <div class="ref-keys"><span class="key">&#8984; Cmd</span></div>
+      <div class="ref-desc">"이걸 해" &mdash; 기본 명령 키 (Mac의 주인공)</div>
+    </div>
+    <div class="ref-row">
+      <div class="ref-keys"><span class="key">&#8997; Opt</span></div>
+      <div class="ref-desc">"근데 좀 다르게 해" &mdash; 변형 키</div>
+    </div>
+    <div class="ref-row">
+      <div class="ref-keys"><span class="key">&#8679; Shift</span></div>
+      <div class="ref-desc">"반대로/확장해서 해" &mdash; 확장 키</div>
+    </div>
+    <div class="ref-row">
+      <div class="ref-keys"><span class="key">&#8963; Ctrl</span></div>
+      <div class="ref-desc">보조 명령 키 (Mac에서는 보조 역할)</div>
+    </div>
+    <div class="ref-row">
+      <div class="ref-keys"><span class="key">Fn</span></div>
+      <div class="ref-desc">"이 키의 숨겨진 기능을 써" &mdash; F키 전환</div>
+    </div>
+  </div>
+</div>
+
+</div><!-- /page-container -->
+
+<!-- ====== SCRIPTS ====== -->
+<script src="js/core.js"></script>
+<script src="js/trainer.js"></script>
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+  EidosTrainer.init();
+  if (typeof Eidos !== 'undefined' && Eidos.Session) {
+    Eidos.Session.start('md-yaml');
+  }
+});
+
+window.addEventListener('beforeunload', function () {
+  if (typeof Eidos !== 'undefined' && Eidos.Session) {
+    if (Eidos.Session.current) {
+      Eidos.Session.current.flashcardsReviewed = Object.keys(EidosTrainer.cardResults).length;
+      Eidos.Session.current.flashcardsCorrect = Object.values(EidosTrainer.cardResults).filter(function (v) { return v; }).length;
+      Eidos.Session.current.challengesDone = EidosTrainer.challengesDone;
+    }
+    Eidos.Session.end();
+  }
+});
+</script>
+</body>
+</html>
