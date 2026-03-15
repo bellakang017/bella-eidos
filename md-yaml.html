@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="ko">
+<html lang="en">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -221,6 +221,24 @@
     color: var(--text);
   }
 
+  /* Korean toggle */
+  .kr-toggle {
+    font-family: -apple-system, sans-serif;
+    font-size: 0.85rem;
+    color: #888;
+    margin-top: 0.25rem;
+    margin-bottom: 1rem;
+  }
+  .kr-toggle summary {
+    cursor: pointer;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.7rem;
+    color: #aaa;
+    letter-spacing: 0.05em;
+  }
+  .kr-toggle summary:hover { color: #666; }
+  .kr-toggle p { margin-top: 0.3rem; }
+
   /* Mobile */
   @media (max-width: 640px) {
     .nav-left .nav-brand { font-size: 16px; }
@@ -268,50 +286,51 @@
   <div class="flashcard-container">
     <div class="flashcard" id="flashcard" onclick="EidosTrainer.flipCard()">
       <div class="flash-face flash-front">
-        <div class="label" style="color:var(--text-dim);margin-bottom:var(--sp-4);">질문</div>
+        <div class="label" style="color:var(--text-dim);margin-bottom:var(--sp-4);">Question</div>
         <div id="fc-question" style="font-family:'EB Garamond',serif;font-size:20px;font-weight:500;line-height:1.5;"></div>
       </div>
       <div class="flash-face flash-back">
-        <div class="label" style="color:var(--purple);margin-bottom:var(--sp-4);">답</div>
+        <div class="label" style="color:var(--purple);margin-bottom:var(--sp-4);">Answer</div>
         <div id="fc-answer" style="font-size:15px;line-height:1.7;"></div>
       </div>
     </div>
   </div>
-  <div class="flash-hint" id="fc-hint">클릭해서 뒤집기</div>
+  <div class="flash-hint" id="fc-hint">Click to flip</div>
   <div class="caption" style="text-align:center;margin-bottom:var(--sp-2);" id="fc-counter"></div>
   <div class="flash-nav">
-    <button class="flash-btn dunno" onclick="EidosTrainer.markCard(false)">다시 볼래</button>
-    <button class="flash-btn" onclick="EidosTrainer.prevCard()">&larr; 이전</button>
-    <button class="flash-btn" onclick="EidosTrainer.nextCard()">다음 &rarr;</button>
-    <button class="flash-btn know" onclick="EidosTrainer.markCard(true)">알아!</button>
+    <button class="flash-btn dunno" onclick="EidosTrainer.markCard(false)">Again</button>
+    <button class="flash-btn" onclick="EidosTrainer.prevCard()">&larr; Prev</button>
+    <button class="flash-btn" onclick="EidosTrainer.nextCard()">Next &rarr;</button>
+    <button class="flash-btn know" onclick="EidosTrainer.markCard(true)">Got it!</button>
   </div>
 
   <div style="margin-top:var(--sp-10);">
     <div class="section-title">Concept Map</div>
-    <div class="concept-map"><span class="cm-accent">마크다운 기초</span>
+    <div class="concept-map"><span class="cm-accent">Markdown Basics</span>
 <span class="cm-dim">│</span>
-<span class="cm-dim">├──</span> <span class="cm-green">#</span>  헤딩 (층 나누기: # = 1층, ## = 2층, ### = 3층)
-<span class="cm-dim">├──</span> <span class="cm-green">**</span> 굵게  <span class="cm-dim">│</span>  <span class="cm-green">*</span> 기울임  <span class="cm-dim">│</span>  <span class="cm-green">==</span> 하이라이트
-<span class="cm-dim">├──</span> <span class="cm-green">`</span>  백틱 1개 = 인라인 코드 (용어 강조)
-<span class="cm-dim">├──</span> <span class="cm-green">```</span> 백틱 3개 = 코드 블록 (여러 줄 보여주기용)
-<span class="cm-dim">├──</span> <span class="cm-green">---</span> 맨 위 = frontmatter 울타리 <span class="cm-dim">│</span> 본문 중간 = 수평선
-<span class="cm-dim">├──</span> <span class="cm-green">- </span> 리스트  <span class="cm-dim">│</span>  <span class="cm-green">Tab</span> = 하위 항목 (들여쓰기)
-<span class="cm-dim">└──</span> <span class="cm-green">[[  ]]</span> 옵시디언 링크 (다른 노트로 연결)
+<span class="cm-dim">├──</span> <span class="cm-green">#</span>  Heading (levels: # = H1, ## = H2, ### = H3)
+<span class="cm-dim">├──</span> <span class="cm-green">**</span> bold  <span class="cm-dim">│</span>  <span class="cm-green">*</span> italic  <span class="cm-dim">│</span>  <span class="cm-green">==</span> highlight
+<span class="cm-dim">├──</span> <span class="cm-green">`</span>  single backtick = inline code (term emphasis)
+<span class="cm-dim">├──</span> <span class="cm-green">```</span> triple backtick = code block (multi-line display)
+<span class="cm-dim">├──</span> <span class="cm-green">---</span> top of note = frontmatter fence <span class="cm-dim">│</span> mid-body = horizontal rule
+<span class="cm-dim">├──</span> <span class="cm-green">- </span> list  <span class="cm-dim">│</span>  <span class="cm-green">Tab</span> = sub-item (indent)
+<span class="cm-dim">└──</span> <span class="cm-green">[[  ]]</span> Obsidian link (connect to another note)
 
 <span class="cm-accent">YAML / Frontmatter</span>
 <span class="cm-dim">│</span>
-<span class="cm-dim">├──</span> 규칙: <span class="cm-accent">이름: 값</span> (콜론 + 띄어쓰기 1칸)
-<span class="cm-dim">├──</span> 여러 값: <span class="cm-accent">[a, b, c]</span> (대괄호 + 쉼표)
-<span class="cm-dim">├──</span> 특수문자 포함: <span class="cm-accent">"값"</span> (큰따옴표로 감싸기)
-<span class="cm-dim">└──</span> 위치: 노트 <span class="cm-accent">맨 첫 줄</span>에서 --- 로 시작, --- 로 끝
+<span class="cm-dim">├──</span> Rule: <span class="cm-accent">name: value</span> (colon + one space)
+<span class="cm-dim">├──</span> Multiple values: <span class="cm-accent">[a, b, c]</span> (brackets + commas)
+<span class="cm-dim">├──</span> Special characters: <span class="cm-accent">"value"</span> (wrap in double quotes)
+<span class="cm-dim">└──</span> Position: starts at <span class="cm-accent">first line</span> with ---, ends with ---
 
-<span class="cm-accent">온톨로지 용어</span>
+<span class="cm-accent">Ontology Terms</span>
 <span class="cm-dim">│</span>
-<span class="cm-dim">├──</span> 온톨로지 = <span class="cm-accent">설계도</span> (데이터 간 관계 규칙)
-<span class="cm-dim">├──</span> 지식 그래프 = 설계도에 <span class="cm-accent">실제 데이터</span>가 채워진 것
-<span class="cm-dim">├──</span> SPARQL = 지식 그래프에 <span class="cm-accent">질문</span>하는 언어
-<span class="cm-dim">├──</span> 벡터 임베딩 = 비슷한 것끼리 <span class="cm-accent">가까이</span> 놓기
-<span class="cm-dim">└──</span> SHACL = 규칙대로 데이터 넣었는지 <span class="cm-accent">검사</span></div>
+<span class="cm-dim">├──</span> Ontology = <span class="cm-accent">blueprint</span> (rules for how data relates)
+<span class="cm-dim">├──</span> Knowledge Graph = blueprint filled with <span class="cm-accent">actual data</span>
+<span class="cm-dim">├──</span> SPARQL = language for <span class="cm-accent">querying</span> the knowledge graph
+<span class="cm-dim">├──</span> Vector Embedding = placing similar things <span class="cm-accent">nearby</span>
+<span class="cm-dim">└──</span> SHACL = <span class="cm-accent">validates</span> data follows the rules</div>
+    <details class="kr-toggle"><summary>한국어</summary>마크다운 기초: # 헤딩 (층 나누기), ** 굵게, * 기울임, == 하이라이트, ` 백틱 1개 = 인라인 코드, ``` 백틱 3개 = 코드 블록, --- 맨 위 = frontmatter 울타리 / 본문 중간 = 수평선, - 리스트, [[ ]] 옵시디언 링크. YAML: 이름: 값 (콜론 + 띄어쓰기 1칸), 여러 값 [a, b, c], 특수문자 "큰따옴표", 노트 맨 첫 줄에서 시작. 온톨로지 = 설계도, 지식 그래프 = 설계도에 실제 데이터, SPARQL = 질문하는 언어, 벡터 임베딩 = 비슷한 것끼리 가까이, SHACL = 규칙 검사.</details>
   </div>
 </div>
 
@@ -322,59 +341,60 @@
 
   <div class="sandbox-grid">
     <div>
-      <div class="sandbox-col-label">타이핑 (마크다운)</div>
-      <textarea class="sandbox-input" id="sandboxInput" oninput="EidosTrainer.renderPreview()" placeholder="여기에 마크다운을 쳐봐!
+      <div class="sandbox-col-label">Input (Markdown)</div>
+      <textarea class="sandbox-input" id="sandboxInput" oninput="EidosTrainer.renderPreview()" placeholder="Type markdown here!
 
-예시:
+Example:
 ---
 type: concept
 date: 2026-03-15
 ---
 
-# 제목
+# Title
 
-본문 텍스트
+Body text
 
-`용어 강조`
+`term emphasis`
 
-**굵게** *기울임* ==하이라이트==
+**bold** *italic* ==highlight==
 
-- 리스트 1
-- 리스트 2
-  - 하위 항목">---
+- List item 1
+- List item 2
+  - Sub-item">---
 type: concept
 date: 2026-03-15
 tags: [ontology, learning]
 ---
 
-# 온톨로지
+# Ontology
 
-데이터 간의 관계 규칙을 정의하는 **설계도**.
+A **blueprint** that defines the rules of relationships between data.
 
-## 핵심 이해
+## Core Understanding
 
-`온톨로지`가 없으면 데이터는 그냥 나열.
-`온톨로지`가 있으면 데이터에 ==인과성==이 생김.
+Without `ontology`, data is just a flat list.
+With `ontology`, data gains ==causality==.
 
-## 연결
+## Connections
 
-- [[Knowledge-Graph]] — 규칙에 데이터가 채워진 결과물
-- [[SPARQL]] — 규칙 위에서 질문하는 언어</textarea>
+- [[Knowledge-Graph]] — The result of filling a blueprint with data
+- [[SPARQL]] — A language for querying on top of rules</textarea>
     </div>
     <div>
-      <div class="sandbox-col-label">미리보기 (옵시디언에서 보이는 것)</div>
+      <div class="sandbox-col-label">Preview (as seen in Obsidian)</div>
       <div class="sandbox-preview" id="sandboxPreview"></div>
     </div>
   </div>
 
   <div class="tip-card">
-    <strong>실험 아이디어:</strong>
-    위 입력창에서 이것들을 바꿔보면서 차이를 확인해봐:
-    <br>&#8226; <code>#</code> 개수를 1개 → 3개로 바꿔보기
-    <br>&#8226; <code>---</code> 를 본문 중간에 넣어보기
-    <br>&#8226; <code>`백틱`</code> 1개 vs <code>```백틱 3개```</code> 차이 확인
-    <br>&#8226; frontmatter에 <code>status: learning</code> 추가해보기
+    <strong>Experiment ideas:</strong>
+    Try changing these in the input above and see the difference:
+    <br>&#8226; Change the number of <code>#</code> from 1 to 3
+    <br>&#8226; Insert <code>---</code> in the middle of the body
+    <br>&#8226; Compare single <code>`backtick`</code> vs <code>```triple backticks```</code>
+    <br>&#8226; Add <code>status: learning</code> to the frontmatter
   </div>
+  <details class="kr-toggle"><summary>한국어</summary>위 입력창에서 이것들을 바꿔보면서 차이를 확인해봐: # 개수를 1개 → 3개로 바꿔보기, --- 를 본문 중간에 넣어보기, 백틱 1개 vs 백틱 3개 차이 확인, frontmatter에 status: learning 추가해보기.</details>
 </div>
 
 <!-- ==================== CHALLENGE ==================== -->
@@ -385,7 +405,7 @@ tags: [ontology, learning]
   <div id="challengeList"></div>
 
   <div style="text-align:center; margin-top:var(--sp-6);">
-    <button class="flash-btn" onclick="EidosTrainer.resetChallenges()" style="font-size:14px;">새 문제 세트</button>
+    <button class="flash-btn" onclick="EidosTrainer.resetChallenges()" style="font-size:14px;">New Set</button>
   </div>
 </div>
 
@@ -394,75 +414,111 @@ tags: [ontology, learning]
   <div class="section-title">Glossary</div>
   <div class="section-desc">Most terms come from everyday objects. Know the origin, infer the meaning.</div>
 
-  <!-- 건축/건설 -->
+  <!-- Architecture -->
   <div class="card" style="margin-bottom:var(--sp-5);">
-    <div class="glossary-category">건축/건설에서 온 용어</div>
-    <div class="glossary-sub">건물을 짓는 것처럼 소프트웨어를 "짓는다"</div>
-    <div class="ref-row"><div class="glossary-term">Framework</div><div class="glossary-def"><strong>건물 뼈대 (철골)</strong> → 코드의 기본 구조. 뼈대가 있고 살만 붙이면 됨.</div></div>
-    <div class="ref-row"><div class="glossary-term">Stack</div><div class="glossary-def"><strong>접시 쌓기</strong> → 기술을 층층이 쌓은 것. "tech stack" = 프로젝트에 쓴 기술 층.</div></div>
-    <div class="ref-row"><div class="glossary-term">Architecture</div><div class="glossary-def"><strong>건축 설계</strong> → 시스템 전체 구조 설계.</div></div>
-    <div class="ref-row"><div class="glossary-term">Scaffolding</div><div class="glossary-def"><strong>공사장 비계</strong> → 초기 뼈대 코드 자동 생성. 완성 후 걷어냄.</div></div>
-    <div class="ref-row"><div class="glossary-term">Build</div><div class="glossary-def"><strong>건물 짓기</strong> → 코드를 실행 가능한 프로그램으로 조립.</div></div>
-    <div class="ref-row"><div class="glossary-term">Deploy</div><div class="glossary-def"><strong>군대 배치</strong> → 완성된 프로그램을 실제 서버에 올리기.</div></div>
+    <div class="glossary-category">Terms from Architecture</div>
+    <details class="kr-toggle"><summary>한국어</summary>건물을 짓는 것처럼 소프트웨어를 "짓는다"</details>
+    <div class="ref-row"><div class="glossary-term">Framework</div><div class="glossary-def"><strong>Building skeleton (steel frame)</strong> → The foundational structure of code. The skeleton is there; you just add the flesh.</div></div>
+    <details class="kr-toggle"><summary>한국어</summary>건물 뼈대 (철골) → 코드의 기본 구조. 뼈대가 있고 살만 붙이면 됨.</details>
+    <div class="ref-row"><div class="glossary-term">Stack</div><div class="glossary-def"><strong>Stacking plates</strong> → Technologies layered on top of each other. "Tech stack" = the layers of tech in a project.</div></div>
+    <details class="kr-toggle"><summary>한국어</summary>접시 쌓기 → 기술을 층층이 쌓은 것. "tech stack" = 프로젝트에 쓴 기술 층.</details>
+    <div class="ref-row"><div class="glossary-term">Architecture</div><div class="glossary-def"><strong>Architectural design</strong> → The overall structural design of a system.</div></div>
+    <details class="kr-toggle"><summary>한국어</summary>건축 설계 → 시스템 전체 구조 설계.</details>
+    <div class="ref-row"><div class="glossary-term">Scaffolding</div><div class="glossary-def"><strong>Construction scaffolding</strong> → Auto-generated starter code. Removed after completion.</div></div>
+    <details class="kr-toggle"><summary>한국어</summary>공사장 비계 → 초기 뼈대 코드 자동 생성. 완성 후 걷어냄.</details>
+    <div class="ref-row"><div class="glossary-term">Build</div><div class="glossary-def"><strong>Constructing a building</strong> → Assembling code into a runnable program.</div></div>
+    <details class="kr-toggle"><summary>한국어</summary>건물 짓기 → 코드를 실행 가능한 프로그램으로 조립.</details>
+    <div class="ref-row"><div class="glossary-term">Deploy</div><div class="glossary-def"><strong>Military deployment</strong> → Putting a finished program onto a live server.</div></div>
+    <details class="kr-toggle"><summary>한국어</summary>군대 배치 → 완성된 프로그램을 실제 서버에 올리기.</details>
   </div>
 
-  <!-- 물/배관 -->
+  <!-- Plumbing -->
   <div class="card" style="margin-bottom:var(--sp-5);">
-    <div class="glossary-category">물/배관에서 온 용어</div>
-    <div class="glossary-sub">데이터가 물처럼 "흐른다"</div>
-    <div class="ref-row"><div class="glossary-term">Pipeline</div><div class="glossary-def"><strong>수도관/송유관</strong> → 데이터가 단계별로 흘러가는 처리 과정. A → B → C.</div></div>
-    <div class="ref-row"><div class="glossary-term">Stream</div><div class="glossary-def"><strong>시냇물</strong> → 데이터가 끊김 없이 연속으로 흘러옴.</div></div>
-    <div class="ref-row"><div class="glossary-term">Port</div><div class="glossary-def"><strong>항구</strong> → 컴퓨터의 출입구. 데이터가 드나드는 문.</div></div>
-    <div class="ref-row"><div class="glossary-term">Socket</div><div class="glossary-def"><strong>전기 콘센트</strong> → 두 프로그램이 연결되는 접점.</div></div>
-    <div class="ref-row"><div class="glossary-term">Flush</div><div class="glossary-def"><strong>물 내리기</strong> → 임시 저장된 데이터를 한꺼번에 내보내기.</div></div>
+    <div class="glossary-category">Terms from Plumbing</div>
+    <details class="kr-toggle"><summary>한국어</summary>데이터가 물처럼 "흐른다"</details>
+    <div class="ref-row"><div class="glossary-term">Pipeline</div><div class="glossary-def"><strong>Water pipe / oil pipeline</strong> → A multi-step process where data flows through stages. A → B → C.</div></div>
+    <details class="kr-toggle"><summary>한국어</summary>수도관/송유관 → 데이터가 단계별로 흘러가는 처리 과정. A → B → C.</details>
+    <div class="ref-row"><div class="glossary-term">Stream</div><div class="glossary-def"><strong>A brook</strong> → Data flowing in continuously without interruption.</div></div>
+    <details class="kr-toggle"><summary>한국어</summary>시냇물 → 데이터가 끊김 없이 연속으로 흘러옴.</details>
+    <div class="ref-row"><div class="glossary-term">Port</div><div class="glossary-def"><strong>Harbor</strong> → A gateway on a computer. The door through which data enters and exits.</div></div>
+    <details class="kr-toggle"><summary>한국어</summary>항구 → 컴퓨터의 출입구. 데이터가 드나드는 문.</details>
+    <div class="ref-row"><div class="glossary-term">Socket</div><div class="glossary-def"><strong>Electrical outlet</strong> → The connection point where two programs meet.</div></div>
+    <details class="kr-toggle"><summary>한국어</summary>전기 콘센트 → 두 프로그램이 연결되는 접점.</details>
+    <div class="ref-row"><div class="glossary-term">Flush</div><div class="glossary-def"><strong>Flushing water</strong> → Pushing all temporarily stored data out at once.</div></div>
+    <details class="kr-toggle"><summary>한국어</summary>물 내리기 → 임시 저장된 데이터를 한꺼번에 내보내기.</details>
   </div>
 
-  <!-- 물건/공간 -->
+  <!-- Objects & Spaces -->
   <div class="card" style="margin-bottom:var(--sp-5);">
-    <div class="glossary-category">물건/공간에서 온 용어</div>
-    <div class="glossary-sub">보이지 않는 것을 보이는 물건에 비유</div>
-    <div class="ref-row"><div class="glossary-term">Container</div><div class="glossary-def"><strong>화물 컨테이너</strong> → 프로그램을 상자에 넣어서 어디서든 동일하게 실행.</div></div>
-    <div class="ref-row"><div class="glossary-term">Sandbox</div><div class="glossary-def"><strong>모래놀이터</strong> → 안전한 실험 공간. 진짜 시스템에 영향 없음.</div></div>
-    <div class="ref-row"><div class="glossary-term">Repository</div><div class="glossary-def"><strong>저장소/창고</strong> → 코드를 보관하는 곳 (GitHub 등).</div></div>
-    <div class="ref-row"><div class="glossary-term">Library</div><div class="glossary-def"><strong>도서관</strong> → 미리 만들어진 코드 모음. 필요할 때 빌려 쓰기.</div></div>
-    <div class="ref-row"><div class="glossary-term">Cache</div><div class="glossary-def"><strong>숨겨둔 보급품</strong> (프랑스어 cacher=숨기다) → 자주 쓰는 데이터를 가까이 숨겨두고 빠르게 꺼냄.</div></div>
-    <div class="ref-row"><div class="glossary-term">Bucket</div><div class="glossary-def"><strong>양동이</strong> → 데이터를 담는 큰 통 (클라우드 저장소).</div></div>
-    <div class="ref-row"><div class="glossary-term">Token</div><div class="glossary-def"><strong>동전/토큰</strong> → 데이터의 최소 단위. LLM에서 단어 쪼개진 조각.</div></div>
+    <div class="glossary-category">Terms from Objects &amp; Spaces</div>
+    <details class="kr-toggle"><summary>한국어</summary>보이지 않는 것을 보이는 물건에 비유</details>
+    <div class="ref-row"><div class="glossary-term">Container</div><div class="glossary-def"><strong>Shipping container</strong> → Packaging a program in a box so it runs identically anywhere.</div></div>
+    <details class="kr-toggle"><summary>한국어</summary>화물 컨테이너 → 프로그램을 상자에 넣어서 어디서든 동일하게 실행.</details>
+    <div class="ref-row"><div class="glossary-term">Sandbox</div><div class="glossary-def"><strong>Sandbox (playground)</strong> → A safe space for experiments. No impact on the real system.</div></div>
+    <details class="kr-toggle"><summary>한국어</summary>모래놀이터 → 안전한 실험 공간. 진짜 시스템에 영향 없음.</details>
+    <div class="ref-row"><div class="glossary-term">Repository</div><div class="glossary-def"><strong>Storage / warehouse</strong> → A place to store code (e.g. GitHub).</div></div>
+    <details class="kr-toggle"><summary>한국어</summary>저장소/창고 → 코드를 보관하는 곳 (GitHub 등).</details>
+    <div class="ref-row"><div class="glossary-term">Library</div><div class="glossary-def"><strong>Library</strong> → A pre-made collection of code. Borrow what you need.</div></div>
+    <details class="kr-toggle"><summary>한국어</summary>도서관 → 미리 만들어진 코드 모음. 필요할 때 빌려 쓰기.</details>
+    <div class="ref-row"><div class="glossary-term">Cache</div><div class="glossary-def"><strong>Hidden supply stash</strong> (French cacher = to hide) → Keeping frequently used data close by for fast retrieval.</div></div>
+    <details class="kr-toggle"><summary>한국어</summary>숨겨둔 보급품 (프랑스어 cacher=숨기다) → 자주 쓰는 데이터를 가까이 숨겨두고 빠르게 꺼냄.</details>
+    <div class="ref-row"><div class="glossary-term">Bucket</div><div class="glossary-def"><strong>Bucket</strong> → A large container for data (cloud storage).</div></div>
+    <details class="kr-toggle"><summary>한국어</summary>양동이 → 데이터를 담는 큰 통 (클라우드 저장소).</details>
+    <div class="ref-row"><div class="glossary-term">Token</div><div class="glossary-def"><strong>Coin / token</strong> → The smallest unit of data. In LLMs, a broken-up piece of a word.</div></div>
+    <details class="kr-toggle"><summary>한국어</summary>동전/토큰 → 데이터의 최소 단위. LLM에서 단어 쪼개진 조각.</details>
   </div>
 
-  <!-- 사람/행동 -->
+  <!-- Human Actions -->
   <div class="card" style="margin-bottom:var(--sp-5);">
-    <div class="glossary-category">사람/행동에서 온 용어</div>
-    <div class="glossary-sub">사람이 하는 행동으로 컴퓨터 작업을 설명</div>
-    <div class="ref-row"><div class="glossary-term">Bug</div><div class="glossary-def"><strong>벌레</strong> → 코드 오류. 1947년 진짜 나방이 컴퓨터에 끼어서 고장, 여기서 유래.</div></div>
-    <div class="ref-row"><div class="glossary-term">Debugging</div><div class="glossary-def"><strong>벌레 잡기</strong> → 오류 찾아서 고치기.</div></div>
-    <div class="ref-row"><div class="glossary-term">Daemon</div><div class="glossary-def"><strong>수호신</strong> (그리스 신화) → 백그라운드에서 조용히 돌아가는 프로그램.</div></div>
-    <div class="ref-row"><div class="glossary-term">Fork</div><div class="glossary-def"><strong>포크 (갈림길)</strong> → 프로젝트를 복사해서 다른 방향으로 개발.</div></div>
-    <div class="ref-row"><div class="glossary-term">Clone</div><div class="glossary-def"><strong>복제</strong> → 저장소를 그대로 복사해서 내 컴퓨터에.</div></div>
-    <div class="ref-row"><div class="glossary-term">Push / Pull</div><div class="glossary-def"><strong>밀다 / 당기다</strong> → 코드를 서버에 올리기 / 서버에서 가져오기.</div></div>
-    <div class="ref-row"><div class="glossary-term">Merge</div><div class="glossary-def"><strong>합치다</strong> → 두 갈래 코드를 하나로.</div></div>
+    <div class="glossary-category">Terms from Human Actions</div>
+    <details class="kr-toggle"><summary>한국어</summary>사람이 하는 행동으로 컴퓨터 작업을 설명</details>
+    <div class="ref-row"><div class="glossary-term">Bug</div><div class="glossary-def"><strong>Insect</strong> → A code error. In 1947, a real moth got stuck in a computer and caused a malfunction — hence the name.</div></div>
+    <details class="kr-toggle"><summary>한국어</summary>벌레 → 코드 오류. 1947년 진짜 나방이 컴퓨터에 끼어서 고장, 여기서 유래.</details>
+    <div class="ref-row"><div class="glossary-term">Debugging</div><div class="glossary-def"><strong>Bug catching</strong> → Finding and fixing errors.</div></div>
+    <details class="kr-toggle"><summary>한국어</summary>벌레 잡기 → 오류 찾아서 고치기.</details>
+    <div class="ref-row"><div class="glossary-term">Daemon</div><div class="glossary-def"><strong>Guardian spirit</strong> (Greek mythology) → A program running quietly in the background.</div></div>
+    <details class="kr-toggle"><summary>한국어</summary>수호신 (그리스 신화) → 백그라운드에서 조용히 돌아가는 프로그램.</details>
+    <div class="ref-row"><div class="glossary-term">Fork</div><div class="glossary-def"><strong>Fork (a fork in the road)</strong> → Copying a project and developing it in a different direction.</div></div>
+    <details class="kr-toggle"><summary>한국어</summary>포크 (갈림길) → 프로젝트를 복사해서 다른 방향으로 개발.</details>
+    <div class="ref-row"><div class="glossary-term">Clone</div><div class="glossary-def"><strong>Clone</strong> → Copying a repository exactly to your own computer.</div></div>
+    <details class="kr-toggle"><summary>한국어</summary>복제 → 저장소를 그대로 복사해서 내 컴퓨터에.</details>
+    <div class="ref-row"><div class="glossary-term">Push / Pull</div><div class="glossary-def"><strong>Push / Pull</strong> → Uploading code to a server / downloading code from a server.</div></div>
+    <details class="kr-toggle"><summary>한국어</summary>밀다 / 당기다 → 코드를 서버에 올리기 / 서버에서 가져오기.</details>
+    <div class="ref-row"><div class="glossary-term">Merge</div><div class="glossary-def"><strong>Merge</strong> → Combining two branches of code into one.</div></div>
+    <details class="kr-toggle"><summary>한국어</summary>합치다 → 두 갈래 코드를 하나로.</details>
   </div>
 
-  <!-- 온톨로지/데이터 -->
+  <!-- Ontology & Data -->
   <div class="card" style="margin-bottom:var(--sp-5);">
-    <div class="glossary-category">온톨로지/데이터 용어</div>
-    <div class="glossary-sub">Bella가 강의에서 배운 것</div>
-    <div class="ref-row"><div class="glossary-term">Ontology</div><div class="glossary-def"><strong>존재론</strong> (철학: "뭐가 존재하는가?") → 데이터 세계의 존재 규칙. 뭐가 있고 어떻게 연결되는가.</div></div>
-    <div class="ref-row"><div class="glossary-term">Schema</div><div class="glossary-def"><strong>형태/구조</strong> (그리스어) → 데이터의 구조 정의서.</div></div>
-    <div class="ref-row"><div class="glossary-term">Graph</div><div class="glossary-def"><strong>그래프 (점+선)</strong> → 노드(점)와 엣지(선)로 관계를 표현.</div></div>
-    <div class="ref-row"><div class="glossary-term">Node</div><div class="glossary-def"><strong>매듭</strong> → 그래프의 한 점 (하나의 데이터).</div></div>
-    <div class="ref-row"><div class="glossary-term">Edge</div><div class="glossary-def"><strong>가장자리/연결선</strong> → 노드 사이의 관계.</div></div>
-    <div class="ref-row"><div class="glossary-term">Query</div><div class="glossary-def"><strong>질문</strong> (라틴어 quaerere) → 데이터에 던지는 질문.</div></div>
-    <div class="ref-row"><div class="glossary-term">Index</div><div class="glossary-def"><strong>책 색인</strong> → 데이터를 빨리 찾기 위한 목차.</div></div>
-    <div class="ref-row"><div class="glossary-term">Embedding</div><div class="glossary-def"><strong>끼워 넣기</strong> → 데이터를 숫자 공간에 끼워 넣어 위치 부여.</div></div>
-    <div class="ref-row"><div class="glossary-term">Hallucination</div><div class="glossary-def"><strong>환각</strong> → LLM이 실제로 없는 정보를 있다고 생성하는 현상.</div></div>
-    <div class="ref-row"><div class="glossary-term">Grounding</div><div class="glossary-def"><strong>접지 (땅에 닿게 하기)</strong> → LLM 출력을 실제 데이터에 대조해서 검증.</div></div>
+    <div class="glossary-category">Ontology &amp; Data Terms</div>
+    <div class="glossary-sub">Terms from Bella's coursework</div>
+    <div class="ref-row"><div class="glossary-term">Ontology</div><div class="glossary-def"><strong>Ontology</strong> (philosophy: "what exists?") → The rules of existence in a data world. What exists and how it connects.</div></div>
+    <details class="kr-toggle"><summary>한국어</summary>존재론 (철학: "뭐가 존재하는가?") → 데이터 세계의 존재 규칙. 뭐가 있고 어떻게 연결되는가.</details>
+    <div class="ref-row"><div class="glossary-term">Schema</div><div class="glossary-def"><strong>Form / structure</strong> (Greek) → A definition document for data structure.</div></div>
+    <details class="kr-toggle"><summary>한국어</summary>형태/구조 (그리스어) → 데이터의 구조 정의서.</details>
+    <div class="ref-row"><div class="glossary-term">Graph</div><div class="glossary-def"><strong>Graph (dots + lines)</strong> → Representing relationships with nodes (dots) and edges (lines).</div></div>
+    <details class="kr-toggle"><summary>한국어</summary>그래프 (점+선) → 노드(점)와 엣지(선)로 관계를 표현.</details>
+    <div class="ref-row"><div class="glossary-term">Node</div><div class="glossary-def"><strong>Knot</strong> → A single point in a graph (one piece of data).</div></div>
+    <details class="kr-toggle"><summary>한국어</summary>매듭 → 그래프의 한 점 (하나의 데이터).</details>
+    <div class="ref-row"><div class="glossary-term">Edge</div><div class="glossary-def"><strong>Edge / connecting line</strong> → The relationship between nodes.</div></div>
+    <details class="kr-toggle"><summary>한국어</summary>가장자리/연결선 → 노드 사이의 관계.</details>
+    <div class="ref-row"><div class="glossary-term">Query</div><div class="glossary-def"><strong>Question</strong> (Latin quaerere) → A question posed to data.</div></div>
+    <details class="kr-toggle"><summary>한국어</summary>질문 (라틴어 quaerere) → 데이터에 던지는 질문.</details>
+    <div class="ref-row"><div class="glossary-term">Index</div><div class="glossary-def"><strong>Book index</strong> → A table of contents for finding data quickly.</div></div>
+    <details class="kr-toggle"><summary>한국어</summary>책 색인 → 데이터를 빨리 찾기 위한 목차.</details>
+    <div class="ref-row"><div class="glossary-term">Embedding</div><div class="glossary-def"><strong>Embedding (fitting in)</strong> → Placing data into a numerical space to assign position.</div></div>
+    <details class="kr-toggle"><summary>한국어</summary>끼워 넣기 → 데이터를 숫자 공간에 끼워 넣어 위치 부여.</details>
+    <div class="ref-row"><div class="glossary-term">Hallucination</div><div class="glossary-def"><strong>Hallucination</strong> → When an LLM generates information that doesn't actually exist.</div></div>
+    <details class="kr-toggle"><summary>한국어</summary>환각 → LLM이 실제로 없는 정보를 있다고 생성하는 현상.</details>
+    <div class="ref-row"><div class="glossary-term">Grounding</div><div class="glossary-def"><strong>Grounding (connecting to earth)</strong> → Verifying LLM output by cross-checking against real data.</div></div>
+    <details class="kr-toggle"><summary>한국어</summary>접지 (땅에 닿게 하기) → LLM 출력을 실제 데이터에 대조해서 검증.</details>
   </div>
 
   <div class="tip-card">
-    <strong>패턴 인식 팁:</strong> 새로운 기술 용어를 만나면 "이 단어의 일상적 뜻이 뭐지?" 물어봐. 그러면 컴퓨터에서의 역할이 거의 자동으로 추론돼.
-    <br><br><em style="color:var(--text-secondary);">예: "Docker" = 부두 노동자(docker). 컨테이너를 싣고 내리는 사람 → 컨테이너를 관리하는 도구.</em>
+    <strong>Pattern recognition tip:</strong> When you encounter a new technical term, ask "What does this word mean in everyday life?" Then the role it plays in computing almost automatically becomes clear.
+    <br><br><em style="color:var(--text-secondary);">Example: "Docker" = a dockworker. Someone who loads and unloads containers → a tool that manages containers.</em>
   </div>
+  <details class="kr-toggle"><summary>한국어</summary>새로운 기술 용어를 만나면 "이 단어의 일상적 뜻이 뭐지?" 물어봐. 그러면 컴퓨터에서의 역할이 거의 자동으로 추론돼. 예: "Docker" = 부두 노동자(docker). 컨테이너를 싣고 내리는 사람 → 컨테이너를 관리하는 도구.</details>
 </div>
 
 <!-- ==================== SYMBOLS ==================== -->
@@ -470,271 +526,277 @@ tags: [ontology, learning]
   <div class="section-title">Symbols</div>
   <div class="section-desc">Common symbols for Mac + Obsidian, and why those key combos work.</div>
 
-  <!-- 마크다운 핵심 심볼 -->
+  <!-- Markdown Core Symbols -->
   <div class="card" style="margin-bottom:var(--sp-5);">
-    <div class="glossary-category">마크다운 핵심 심볼</div>
+    <div class="glossary-category">Markdown Core Symbols</div>
     <table class="symbol-table">
       <tr>
         <td class="symbol-char">#</td>
-        <td class="symbol-desc"><strong>헤딩</strong><br><span class="symbol-note">Shift + 3. 숫자 3 위의 기호.</span></td>
-        <td class="symbol-note">건물 층 나누기</td>
+        <td class="symbol-desc"><strong>Heading</strong><br><span class="symbol-note">Shift + 3. The symbol above the number 3.</span></td>
+        <td class="symbol-note">Divides the document into levels</td>
       </tr>
       <tr>
         <td class="symbol-char">` &#8361;</td>
-        <td class="symbol-desc"><strong>백틱</strong><br><span class="symbol-note">숫자 1 왼쪽 키. 한글=&#8361;, 영문=`</span></td>
-        <td class="symbol-note">코드/용어 강조</td>
+        <td class="symbol-desc"><strong>Backtick</strong><br><span class="symbol-note">Key to the left of 1. Korean mode = &#8361;, English mode = `</span></td>
+        <td class="symbol-note">Code / term emphasis</td>
       </tr>
       <tr>
         <td class="symbol-char">---</td>
-        <td class="symbol-desc"><strong>하이픈 3개</strong><br><span class="symbol-note">- 키 3번</span></td>
-        <td class="symbol-note">frontmatter 울타리 / 수평선</td>
+        <td class="symbol-desc"><strong>Three hyphens</strong><br><span class="symbol-note">Press - key 3 times</span></td>
+        <td class="symbol-note">Frontmatter fence / horizontal rule</td>
       </tr>
       <tr>
         <td class="symbol-char">*</td>
-        <td class="symbol-desc"><strong>별표 (asterisk)</strong><br><span class="symbol-note">Shift + 8</span></td>
-        <td class="symbol-note">*기울임* **굵게** 리스트</td>
+        <td class="symbol-desc"><strong>Asterisk</strong><br><span class="symbol-note">Shift + 8</span></td>
+        <td class="symbol-note">*italic* **bold** list</td>
       </tr>
       <tr>
         <td class="symbol-char">[ ]</td>
-        <td class="symbol-desc"><strong>대괄호</strong><br><span class="symbol-note">[ = ㅂ 옆 키, ] = 그 오른쪽</span></td>
-        <td class="symbol-note">YAML 목록 [a, b] / 링크 [[note]]</td>
+        <td class="symbol-desc"><strong>Square brackets</strong><br><span class="symbol-note">[ and ] keys (right of P on US layout)</span></td>
+        <td class="symbol-note">YAML list [a, b] / link [[note]]</td>
       </tr>
       <tr>
         <td class="symbol-char">==</td>
-        <td class="symbol-desc"><strong>등호 2개</strong><br><span class="symbol-note">= 키 2번 (Shift 안 누름)</span></td>
-        <td class="symbol-note">==하이라이트== (노란 형광펜)</td>
+        <td class="symbol-desc"><strong>Two equals signs</strong><br><span class="symbol-note">Press = key twice (no Shift)</span></td>
+        <td class="symbol-note">==highlight== (yellow highlighter)</td>
       </tr>
       <tr>
         <td class="symbol-char">:</td>
-        <td class="symbol-desc"><strong>콜론</strong><br><span class="symbol-note">Shift + ; (세미콜론 키)</span></td>
-        <td class="symbol-note">YAML의 핵심: 이름: 값</td>
+        <td class="symbol-desc"><strong>Colon</strong><br><span class="symbol-note">Shift + ; (semicolon key)</span></td>
+        <td class="symbol-note">The heart of YAML: name: value</td>
       </tr>
     </table>
+    <details class="kr-toggle"><summary>한국어</summary># 헤딩 (Shift+3, 숫자 3 위의 기호, 건물 층 나누기) | ` 백틱 (숫자 1 왼쪽 키, 한글=&#8361; 영문=`) | --- 하이픈 3개 (frontmatter 울타리/수평선) | * 별표 (Shift+8) | [ ] 대괄호 (ㅂ 옆 키) | == 등호 2개 (하이라이트) | : 콜론 (Shift+;, YAML의 핵심)</details>
   </div>
 
-  <!-- 특수 문자 입력 -->
+  <!-- Special Character Input -->
   <div class="card" style="margin-bottom:var(--sp-5);">
-    <div class="glossary-category">특수 문자 입력</div>
+    <div class="glossary-category">Special Character Input</div>
     <table class="symbol-table">
       <tr>
         <td class="symbol-char">&mdash;</td>
         <td class="symbol-desc"><strong>em dash</strong><br><span class="key">Opt</span> <span class="ref-plus">+</span> <span class="key">Shift</span> <span class="ref-plus">+</span> <span class="key">-</span></td>
-        <td class="symbol-note">하이픈(-)의 "변형(Opt) + 확장(Shift)" 버전</td>
+        <td class="symbol-note">The "modified (Opt) + extended (Shift)" version of hyphen (-)</td>
       </tr>
       <tr>
         <td class="symbol-char">&ndash;</td>
         <td class="symbol-desc"><strong>en dash</strong><br><span class="key">Opt</span> <span class="ref-plus">+</span> <span class="key">-</span></td>
-        <td class="symbol-note">하이픈(-)의 "변형(Opt)" 버전. 숫자 범위에 사용 (1&ndash;10)</td>
+        <td class="symbol-note">The "modified (Opt)" version of hyphen. Used for number ranges (1&ndash;10)</td>
       </tr>
       <tr>
         <td class="symbol-char">&hellip;</td>
-        <td class="symbol-desc"><strong>말줄임표</strong><br><span class="key">Opt</span> <span class="ref-plus">+</span> <span class="key">;</span></td>
-        <td class="symbol-note">... 대신 한 글자로</td>
+        <td class="symbol-desc"><strong>Ellipsis</strong><br><span class="key">Opt</span> <span class="ref-plus">+</span> <span class="key">;</span></td>
+        <td class="symbol-note">A single character instead of ...</td>
       </tr>
       <tr>
         <td class="symbol-char">&rarr; &larr;</td>
-        <td class="symbol-desc"><strong>화살표</strong><br><span class="key">Cmd</span> <span class="ref-plus">+</span> <span class="key">Ctrl</span> <span class="ref-plus">+</span> <span class="key">Space</span> → "arrow" 검색</td>
-        <td class="symbol-note">특수문자 입력기에서 검색</td>
+        <td class="symbol-desc"><strong>Arrows</strong><br><span class="key">Cmd</span> <span class="ref-plus">+</span> <span class="key">Ctrl</span> <span class="ref-plus">+</span> <span class="key">Space</span> → search "arrow"</td>
+        <td class="symbol-note">Search in the special character picker</td>
       </tr>
       <tr>
         <td class="symbol-char" style="letter-spacing:2px;">&#8984; &#8997; &#8679; &#8963;</td>
-        <td class="symbol-desc"><strong>키보드 심볼</strong><br><span class="symbol-note">특수문자 입력기에서 "command" 등 검색</span></td>
+        <td class="symbol-desc"><strong>Keyboard symbols</strong><br><span class="symbol-note">Search "command" etc. in the special character picker</span></td>
         <td class="symbol-note">&#8984;=Cmd &#8997;=Opt &#8679;=Shift &#8963;=Ctrl</td>
       </tr>
     </table>
+    <details class="kr-toggle"><summary>한국어</summary>em dash: 하이픈의 "변형(Opt) + 확장(Shift)" 버전 | en dash: 하이픈의 "변형(Opt)" 버전, 숫자 범위에 사용 | 말줄임표: ... 대신 한 글자로 | 화살표: 특수문자 입력기에서 검색 | 키보드 심볼: 특수문자 입력기에서 "command" 등 검색</details>
   </div>
 
-  <!-- 복사해서 쓰기 -->
+  <!-- Click to copy -->
   <div class="card" style="margin-bottom:var(--sp-5);">
-    <div class="glossary-category">자주 쓰는 화살표 &amp; 심볼 (복사해서 쓰기)</div>
+    <div class="glossary-category">Common Arrows &amp; Symbols (click to copy)</div>
     <div class="symbols-grid">
-      <span title="오른쪽 화살표" onclick="EidosTrainer.copySymbol('→')">→</span>
-      <span title="왼쪽 화살표" onclick="EidosTrainer.copySymbol('←')">←</span>
-      <span title="위 화살표" onclick="EidosTrainer.copySymbol('↑')">↑</span>
-      <span title="아래 화살표" onclick="EidosTrainer.copySymbol('↓')">↓</span>
-      <span title="양방향" onclick="EidosTrainer.copySymbol('↔')">↔</span>
+      <span title="Right arrow" onclick="EidosTrainer.copySymbol('→')">→</span>
+      <span title="Left arrow" onclick="EidosTrainer.copySymbol('←')">←</span>
+      <span title="Up arrow" onclick="EidosTrainer.copySymbol('↑')">↑</span>
+      <span title="Down arrow" onclick="EidosTrainer.copySymbol('↓')">↓</span>
+      <span title="Bidirectional" onclick="EidosTrainer.copySymbol('↔')">↔</span>
       <span title="em dash" onclick="EidosTrainer.copySymbol('—')">—</span>
       <span title="en dash" onclick="EidosTrainer.copySymbol('–')">–</span>
-      <span title="말줄임" onclick="EidosTrainer.copySymbol('…')">…</span>
-      <span title="체크" onclick="EidosTrainer.copySymbol('✓')">✓</span>
-      <span title="엑스" onclick="EidosTrainer.copySymbol('✗')">✗</span>
-      <span title="별" onclick="EidosTrainer.copySymbol('★')">★</span>
-      <span title="큰따옴표 열기" onclick="EidosTrainer.copySymbol('\u201C')">&ldquo;</span>
-      <span title="큰따옴표 닫기" onclick="EidosTrainer.copySymbol('\u201D')">&rdquo;</span>
+      <span title="Ellipsis" onclick="EidosTrainer.copySymbol('…')">…</span>
+      <span title="Check" onclick="EidosTrainer.copySymbol('✓')">✓</span>
+      <span title="Cross" onclick="EidosTrainer.copySymbol('✗')">✗</span>
+      <span title="Star" onclick="EidosTrainer.copySymbol('★')">★</span>
+      <span title="Left double quote" onclick="EidosTrainer.copySymbol('\u201C')">&ldquo;</span>
+      <span title="Right double quote" onclick="EidosTrainer.copySymbol('\u201D')">&rdquo;</span>
     </div>
     <div class="caption" style="text-align:center;">Click a symbol to copy</div>
     <div id="copyAlert" style="display:none;text-align:center;color:var(--green);font-size:13px;font-weight:600;margin-top:4px;"></div>
   </div>
 
-  <!-- 옵시디언 전용 단축키 -->
+  <!-- Obsidian Shortcuts -->
   <div class="card" style="margin-bottom:var(--sp-5);">
-    <div class="glossary-category">옵시디언 전용 단축키</div>
+    <div class="glossary-category">Obsidian Shortcuts</div>
     <div class="ref-row">
       <div class="ref-keys"><span class="key">Cmd</span><span class="ref-plus">+</span><span class="key">E</span></div>
-      <div class="ref-desc">편집 모드 ↔ 읽기 모드 전환</div>
+      <div class="ref-desc">Toggle edit mode ↔ reading mode</div>
     </div>
     <div class="ref-row">
       <div class="ref-keys"><span class="key">Cmd</span><span class="ref-plus">+</span><span class="key">K</span></div>
-      <div class="ref-desc">외부 링크 삽입</div>
+      <div class="ref-desc">Insert external link</div>
     </div>
     <div class="ref-row">
       <div class="ref-keys"><span class="key">Cmd</span><span class="ref-plus">+</span><span class="key">O</span></div>
-      <div class="ref-desc">Quick Switcher (노트 빠르게 열기)</div>
+      <div class="ref-desc">Quick Switcher (quickly open a note)</div>
     </div>
     <div class="ref-row">
       <div class="ref-keys"><span class="key">Cmd</span><span class="ref-plus">+</span><span class="key">P</span></div>
-      <div class="ref-desc">Command Palette (모든 명령 검색)</div>
+      <div class="ref-desc">Command Palette (search all commands)</div>
     </div>
     <div class="ref-row">
       <div class="ref-keys"><span class="key">[</span><span class="key">[</span></div>
-      <div class="ref-desc">노트 링크 자동완성 시작 (타이핑하면 노트 목록 뜸)</div>
+      <div class="ref-desc">Start note link autocomplete (typing shows note list)</div>
     </div>
     <div class="ref-row">
       <div class="ref-keys"><span class="key">Cmd</span><span class="ref-plus">+</span><span class="key">Shift</span><span class="ref-plus">+</span><span class="key">F</span></div>
-      <div class="ref-desc">전체 vault에서 검색 (Find = 찾기의 확장 버전)</div>
+      <div class="ref-desc">Search entire vault (extended version of Find)</div>
     </div>
+    <details class="kr-toggle"><summary>한국어</summary>Cmd+E: 편집 모드 ↔ 읽기 모드 전환 | Cmd+K: 외부 링크 삽입 | Cmd+O: Quick Switcher (노트 빠르게 열기) | Cmd+P: Command Palette (모든 명령 검색) | [[: 노트 링크 자동완성 시작 | Cmd+Shift+F: 전체 vault에서 검색</details>
   </div>
 
   <div class="tip-card">
-    <strong>단축키 읽는 법:</strong>
-    <br>조합을 볼 때 이렇게 해석해:
-    <br>&#8226; <strong>Cmd</strong> = "이걸 해" (기본 명령)
-    <br>&#8226; <strong>+ Shift</strong> = "확장/반대 버전으로"
-    <br>&#8226; <strong>+ Option</strong> = "변형 버전으로"
-    <br>&#8226; 마지막 글자 = 행동 (S=Save, F=Find, K=linK, E=Edit, O=Open, P=Palette)
+    <strong>How to Read Shortcuts:</strong>
+    <br>When you see a key combination, interpret it like this:
+    <br>&#8226; <strong>Cmd</strong> = "Do this" (base command)
+    <br>&#8226; <strong>+ Shift</strong> = "Extended / opposite version"
+    <br>&#8226; <strong>+ Option</strong> = "Modified version"
+    <br>&#8226; Last letter = the action (S=Save, F=Find, K=linK, E=Edit, O=Open, P=Palette)
   </div>
+  <details class="kr-toggle"><summary>한국어</summary>조합을 볼 때 이렇게 해석해: Cmd = "이걸 해" (기본 명령), + Shift = "확장/반대 버전으로", + Option = "변형 버전으로", 마지막 글자 = 행동 (S=Save, F=Find, K=linK, E=Edit, O=Open, P=Palette)</details>
 </div>
 
 <!-- ==================== REF ==================== -->
 <div class="page" id="page-ref">
   <div class="section-title">Reference</div>
 
-  <!-- 키보드 단축키 -->
+  <!-- Keyboard Shortcuts -->
   <div class="card" style="margin-bottom:var(--sp-5);">
-    <div class="glossary-category">키보드 단축키</div>
+    <div class="glossary-category">Keyboard Shortcuts</div>
     <div class="ref-row">
       <div class="ref-keys"><span class="key">&#8361;</span></div>
-      <div class="ref-desc">백틱 (한글 모드). 용어 강조용.</div>
+      <div class="ref-desc">Backtick (Korean mode). For term emphasis.</div>
     </div>
     <div class="ref-row">
       <div class="ref-keys"><span class="key">&#8361;&#8361;&#8361;</span></div>
-      <div class="ref-desc">코드 블록 열기/닫기. 닫을 때 새 줄에 단독으로.</div>
+      <div class="ref-desc">Open/close code block. Close on a new line by itself.</div>
     </div>
     <div class="ref-row">
       <div class="ref-keys"><span class="key">Opt</span><span class="ref-plus">+</span><span class="key">Shift</span><span class="ref-plus">+</span><span class="key">-</span></div>
-      <div class="ref-desc">em dash &mdash; 입력</div>
+      <div class="ref-desc">Type em dash &mdash;</div>
     </div>
     <div class="ref-row">
       <div class="ref-keys"><span class="key">Cmd</span><span class="ref-plus">+</span><span class="key">B</span></div>
-      <div class="ref-desc"><strong>굵게</strong> (Bold)</div>
+      <div class="ref-desc"><strong>Bold</strong></div>
     </div>
     <div class="ref-row">
       <div class="ref-keys"><span class="key">Cmd</span><span class="ref-plus">+</span><span class="key">I</span></div>
-      <div class="ref-desc"><em>기울임</em> (Italic)</div>
+      <div class="ref-desc"><em>Italic</em></div>
     </div>
+    <details class="kr-toggle"><summary>한국어</summary>&#8361; = 백틱 (한글 모드, 용어 강조용) | &#8361;&#8361;&#8361; = 코드 블록 열기/닫기 | Opt+Shift+- = em dash 입력 | Cmd+B = 굵게 | Cmd+I = 기울임</details>
   </div>
 
-  <!-- 마크다운 문법 -->
+  <!-- Markdown Syntax -->
   <div class="card" style="margin-bottom:var(--sp-5);">
-    <div class="glossary-category">마크다운 문법</div>
+    <div class="glossary-category">Markdown Syntax</div>
     <table class="ref-table">
       <tr>
-        <td class="mono-col"># 텍스트</td>
-        <td>제목 1 (가장 큰)</td>
+        <td class="mono-col"># text</td>
+        <td>Heading 1 (largest)</td>
       </tr>
       <tr>
-        <td class="mono-col">## 텍스트</td>
-        <td>제목 2</td>
+        <td class="mono-col">## text</td>
+        <td>Heading 2</td>
       </tr>
       <tr>
-        <td class="mono-col">### 텍스트</td>
-        <td>제목 3</td>
+        <td class="mono-col">### text</td>
+        <td>Heading 3</td>
       </tr>
       <tr>
-        <td class="mono-col">**텍스트**</td>
-        <td><strong>굵게</strong></td>
+        <td class="mono-col">**text**</td>
+        <td><strong>Bold</strong></td>
       </tr>
       <tr>
-        <td class="mono-col">*텍스트*</td>
-        <td><em>기울임</em></td>
+        <td class="mono-col">*text*</td>
+        <td><em>Italic</em></td>
       </tr>
       <tr>
-        <td class="mono-col">==텍스트==</td>
-        <td><mark>하이라이트</mark></td>
+        <td class="mono-col">==text==</td>
+        <td><mark>Highlight</mark></td>
       </tr>
       <tr>
-        <td class="mono-col">`텍스트`</td>
-        <td><code>인라인 코드</code></td>
+        <td class="mono-col">`text`</td>
+        <td><code>Inline code</code></td>
       </tr>
       <tr>
-        <td class="mono-col">```여러줄```</td>
-        <td>코드 블록</td>
+        <td class="mono-col">```multi-line```</td>
+        <td>Code block</td>
       </tr>
       <tr>
-        <td class="mono-col">- 텍스트</td>
-        <td>&#8226; 리스트 항목</td>
+        <td class="mono-col">- text</td>
+        <td>&#8226; List item</td>
       </tr>
       <tr>
-        <td class="mono-col">[[노트이름]]</td>
-        <td><a href="#">노트 링크</a> (옵시디언)</td>
+        <td class="mono-col">[[note name]]</td>
+        <td><a href="#">Note link</a> (Obsidian)</td>
       </tr>
       <tr>
         <td class="mono-col">---</td>
-        <td>frontmatter 울타리 / 수평선</td>
+        <td>Frontmatter fence / horizontal rule</td>
       </tr>
     </table>
   </div>
 
-  <!-- YAML 값 종류 -->
+  <!-- YAML Value Types -->
   <div class="card" style="margin-bottom:var(--sp-5);">
-    <div class="glossary-category">YAML 값 종류</div>
+    <div class="glossary-category">YAML Value Types</div>
     <table class="ref-table">
       <tr>
-        <td style="width:100px;font-weight:600;">텍스트</td>
+        <td style="width:100px;font-weight:600;">Text</td>
         <td class="mono-col" style="width:auto;">type: concept</td>
-        <td class="symbol-note">그냥 쓰기</td>
+        <td class="symbol-note">Just write it</td>
       </tr>
       <tr>
-        <td style="font-weight:600;">날짜</td>
+        <td style="font-weight:600;">Date</td>
         <td class="mono-col" style="width:auto;">date: 2026-03-15</td>
-        <td class="symbol-note">년-월-일</td>
+        <td class="symbol-note">YYYY-MM-DD</td>
       </tr>
       <tr>
-        <td style="font-weight:600;">목록</td>
+        <td style="font-weight:600;">List</td>
         <td class="mono-col" style="width:auto;">tags: [a, b, c]</td>
-        <td class="symbol-note">대괄호 + 쉼표</td>
+        <td class="symbol-note">Brackets + commas</td>
       </tr>
       <tr>
-        <td style="font-weight:600;">특수문자 포함</td>
+        <td style="font-weight:600;">Special chars</td>
         <td class="mono-col" style="width:auto;">url: "https://..."</td>
-        <td class="symbol-note">큰따옴표로 감싸기</td>
+        <td class="symbol-note">Wrap in double quotes</td>
       </tr>
     </table>
   </div>
 
-  <!-- 키보드 키 의미 -->
+  <!-- Key Meanings -->
   <div class="card">
-    <div class="glossary-category">키보드 키 의미</div>
+    <div class="glossary-category">Key Meanings</div>
     <div class="ref-row">
       <div class="ref-keys"><span class="key">&#8984; Cmd</span></div>
-      <div class="ref-desc">"이걸 해" &mdash; 기본 명령 키 (Mac의 주인공)</div>
+      <div class="ref-desc">"Do this" &mdash; the primary command key (Mac's protagonist)</div>
     </div>
     <div class="ref-row">
       <div class="ref-keys"><span class="key">&#8997; Opt</span></div>
-      <div class="ref-desc">"근데 좀 다르게 해" &mdash; 변형 키</div>
+      <div class="ref-desc">"But do it differently" &mdash; the modifier key</div>
     </div>
     <div class="ref-row">
       <div class="ref-keys"><span class="key">&#8679; Shift</span></div>
-      <div class="ref-desc">"반대로/확장해서 해" &mdash; 확장 키</div>
+      <div class="ref-desc">"Do the opposite / extended version" &mdash; the extension key</div>
     </div>
     <div class="ref-row">
       <div class="ref-keys"><span class="key">&#8963; Ctrl</span></div>
-      <div class="ref-desc">보조 명령 키 (Mac에서는 보조 역할)</div>
+      <div class="ref-desc">Secondary command key (supporting role on Mac)</div>
     </div>
     <div class="ref-row">
       <div class="ref-keys"><span class="key">Fn</span></div>
-      <div class="ref-desc">"이 키의 숨겨진 기능을 써" &mdash; F키 전환</div>
+      <div class="ref-desc">"Use this key's hidden function" &mdash; toggles F-keys</div>
     </div>
+    <details class="kr-toggle"><summary>한국어</summary>Cmd = "이걸 해" (기본 명령 키) | Opt = "근데 좀 다르게 해" (변형 키) | Shift = "반대로/확장해서 해" (확장 키) | Ctrl = 보조 명령 키 | Fn = "이 키의 숨겨진 기능을 써" (F키 전환)</details>
   </div>
 </div>
 

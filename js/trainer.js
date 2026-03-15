@@ -273,10 +273,10 @@ window.EidosTrainer = {
       div.style.marginBottom = '16px';
       div.innerHTML =
         '<div class="challenge-q subheading" style="margin-bottom:12px;">' + (i + 1) + '. ' + ch.q + '</div>' +
-        '<textarea class="challenge-input" id="ch-input-' + i + '" placeholder="여기에 타이핑..."></textarea>' +
+        '<textarea class="challenge-input" id="ch-input-' + i + '" placeholder="Type here..."></textarea>' +
         '<div style="display:flex;gap:8px;align-items:center;margin-top:8px;">' +
-          '<button class="flash-btn" onclick="EidosTrainer.checkChallenge(' + i + ')">확인</button>' +
-          '<button class="flash-btn" onclick="EidosTrainer.showHint(' + i + ')" style="color:var(--text-dim);">힌트</button>' +
+          '<button class="flash-btn" onclick="EidosTrainer.checkChallenge(' + i + ')">Check</button>' +
+          '<button class="flash-btn" onclick="EidosTrainer.showHint(' + i + ')" style="color:var(--text-dim);">Hint</button>' +
         '</div>' +
         '<div class="challenge-result" id="ch-result-' + i + '" style="display:none;"></div>' +
         '<div class="caption" style="margin-top:4px;display:none;" id="ch-hint-' + i + '">Hint: ' + ch.hint + '</div>';
